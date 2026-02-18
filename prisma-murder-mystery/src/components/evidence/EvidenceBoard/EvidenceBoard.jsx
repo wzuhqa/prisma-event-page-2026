@@ -31,7 +31,8 @@ const SPONSORS_DATA = [
     { name: "Sipp", codename: "The Drink", note: "Spiked.", logo: "" },
     { name: "Skivia", codename: "The Skin", note: "DNA evidence found.", logo: "" },
     { name: "Svva", codename: "The Essence", note: "Lingering scent.", logo: "" },
-    { name: "Timex", codename: "The Clock", note: "Running out of time.", logo: "" }
+    { name: "Timex", codename: "The Clock", note: "Running out of time.", logo: "" },
+    { name: "Vfission", codename: "The Optic", note: "Caught on infrared lens.", logo: "" }
 ]
 
 const EvidenceBoard = () => {
