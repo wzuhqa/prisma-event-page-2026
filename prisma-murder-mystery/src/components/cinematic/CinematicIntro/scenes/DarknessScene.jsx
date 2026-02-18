@@ -1,6 +1,9 @@
 import { useEffect, useRef } from 'react'
 import gsap from 'gsap'
+import { TextPlugin } from 'gsap/TextPlugin'
 import styles from '../CinematicIntro.module.css'
+
+gsap.registerPlugin(TextPlugin)
 
 /**
  * Scene 1: Darkness
