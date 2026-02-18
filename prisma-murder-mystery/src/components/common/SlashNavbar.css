@@ -68,6 +68,116 @@
   z-index: 5;
 }
 
+/* ── Forensic Console Core (V2.3) ── */
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  padding: 1.2rem 3rem;
+  background: var(--bg-base);
+  border-bottom: 1px solid #1a1a20;
+  z-index: 1000;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: var(--nav-mono);
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.8);
+  overflow: hidden;
+}
+
+/* Vertical Divider Layer */
+.navbar::before {
+  content: '';
+  position: absolute;
+  left: 320px;
+  top: 15%;
+  height: 70%;
+  width: 1px;
+  background: linear-gradient(to bottom, transparent, rgba(255, 255, 255, 0.05), transparent);
+}
+
+/* ── Brand / Status Area ── */
+.brand {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  position: relative;
+}
+
+.brandMain {
+  font-weight: 900;
+  font-size: 1.4rem;
+  letter-spacing: 0.15em;
+  color: var(--text-header);
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.caseId {
+  font-size: 0.65rem;
+  color: var(--color-blood-accent);
+  border: 1px solid var(--color-blood-accent);
+  padding: 0.1rem 0.6rem;
+  letter-spacing: 0;
+  text-shadow: 0 0 10px rgba(122, 14, 18, 0.5);
+}
+
+.brandSub {
+  font-size: 0.6rem;
+  color: var(--text-meta);
+  letter-spacing: 0.25em;
+  font-weight: 500;
+}
+
+/* ── Nav Items ── */
+.navItems {
+  display: flex;
+  gap: 3.5rem;
+  align-items: center;
+}
+
+.navItem {
+  text-decoration: none;
+  color: var(--text-meta);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  position: relative;
+  padding: 0.5rem 0;
+  transition: all 0.4s ease;
+}
+
+.navItem:hover {
+  color: var(--text-header);
+  text-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
+}
+
+.navItem.active {
+  color: #fff;
+}
+
+/* The Red Thread (GSAP Controlled, but base styling here) */
+.hoverThread {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 1px;
+  background: var(--color-blood-accent);
+  width: 0;
+  opacity: 0.8;
+  box-shadow: 0 0 8px var(--color-blood-accent);
+  pointer-events: none;
+}
+
+/* Inactive dimming (managed by global spotlight) */
+body.psychological-spotlight .navItem:not(:hover) {
+  opacity: 0.3;
+  filter: blur(1px);
+}
+
 /* Physical Nails */
 .navbar-nail {
   position: absolute;
@@ -87,47 +197,6 @@
 .navbar-nail--tr {
   top: 12px;
   right: 12px;
-}
-
-/* ----- BRAND SECTION ----- */
-.navbar-brand {
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-  min-width: 250px;
-}
-
-.brand-main {
-  font-family: 'Playfair Display', serif;
-  font-size: 1.2rem;
-  font-weight: 900;
-  color: #fff;
-  letter-spacing: 0.05em;
-}
-
-.brand-uni {
-  font-size: 0.55rem;
-  color: #666;
-  letter-spacing: 0.2em;
-  font-weight: 700;
-}
-
-.brand-meta {
-  display: flex;
-  gap: 1rem;
-  margin-top: 2px;
-}
-
-.case-id,
-.clearance-level {
-  font-size: 0.5rem;
-  color: #444;
-  font-weight: 700;
-}
-
-.restricted-glow {
-  color: var(--nav-crimson);
-  text-shadow: 0 0 5px rgba(139, 0, 0, 0.8);
 }
 
 /* ----- DIVIDERS ----- */

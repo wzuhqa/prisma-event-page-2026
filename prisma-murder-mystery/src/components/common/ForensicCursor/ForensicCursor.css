@@ -1,0 +1,39 @@
+.forensic-cursor {
+    position: fixed;
+    pointer-events: none;
+    z-index: 10000;
+    transform: translate(-50%, -50%);
+    transition: width 0.3s, height 0.3s;
+}
+
+.cursor-dot {
+    width: 4px;
+    height: 4px;
+    background: #fff;
+    border-radius: 50%;
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+}
+
+.cursor-aura {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 20px;
+    height: 20px;
+    background: radial-gradient(circle, rgba(122, 14, 18, 0.3) 0%, transparent 70%);
+    border-radius: 50%;
+    transition: width 0.3s, height 0.3s, background 0.3s;
+}
+
+.forensic-cursor--pointer .cursor-aura {
+    width: 40px;
+    height: 40px;
+    background: radial-gradient(circle, rgba(122, 14, 18, 0.5) 0%, transparent 70%);
+}
+
+@media (max-width: 1024px) {
+    .forensic-cursor {
+        display: none;
+    }
+}

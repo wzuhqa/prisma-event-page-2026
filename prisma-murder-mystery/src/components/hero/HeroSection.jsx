@@ -144,15 +144,26 @@ const HeroSection = () => {
               <Link
                 to="/events"
                 className={styles.tabButton}
-                onMouseEnter={() => setInvestigateHover(true)}
-                onMouseLeave={() => setInvestigateHover(false)}
+                onMouseEnter={() => {
+                  setInvestigateHover(true);
+                  document.body.classList.add('psychological-spotlight');
+                }}
+                onMouseLeave={() => {
+                  setInvestigateHover(false);
+                  document.body.classList.remove('psychological-spotlight');
+                }}
               >
                 <div className={styles.scannerLine} />
                 <span className={styles.tabIcon}>⌕</span>
                 {investigateHover ? 'ACCESS GRANTED' : 'ENTER INVESTIGATION'}
               </Link>
 
-              <Link to="/register" className={styles.approvalClip}>
+              <Link
+                to="/register"
+                className={styles.approvalClip}
+                onMouseEnter={() => document.body.classList.add('psychological-spotlight')}
+                onMouseLeave={() => document.body.classList.remove('psychological-spotlight')}
+              >
                 <div className={styles.clipPin} />
                 <div className={styles.paperRipple} />
                 <span className={styles.clipText}>APPROVE ACCESS</span>

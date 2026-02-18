@@ -1,10 +1,12 @@
-import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom'
+import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import { useState, useEffect, useCallback, useRef, lazy, Suspense } from 'react'
 import CinematicIntro from './components/cinematic/CinematicIntro'
 import SlashNavbar from './components/common/SlashNavbar'
 import Footer from './components/common/Footer'
 import GlobalParticles from './components/common/GlobalParticles'
 import { NavigationProvider } from './context/NavigationContext'
+import ErrorBoundary from './components/ErrorBoundary'
+import ForensicCursor from './components/common/ForensicCursor/ForensicCursor';
 
 // Lazy load page components for code splitting
 const Home = lazy(() => import('./pages/Home'))
@@ -19,64 +21,50 @@ const PageLoader = () => (
   <div style={{
     position: 'fixed',
     inset: 0,
-    background: '#000000',
+    background: '#0A0A0D',
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-    color: '#c0c0c0',
-    fontFamily: 'Inter, sans-serif',
-    fontSize: '14px',
+    color: '#E5E5E5',
+    fontFamily: 'monospace',
+    fontSize: '12px',
     letterSpacing: '2px'
   }}>
-    LOADING...
+    INITIALIZING INTERFACE...
   </div>
 )
 
-// Main app content with router
 const AppContent = () => {
   const [isLoading, setIsLoading] = useState(true)
   const loadingCompleteRef = useRef(false)
 
-  const handleSkip = () => {
-    if (!loadingCompleteRef.current) {
-      loadingCompleteRef.current = true
-      setIsLoading(false)
-    }
-  }
+  // Adaptive Scroll Intensity Logic
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrolled = window.scrollY;
+      const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+      const scrollPercent = scrolled / maxScroll;
+      document.documentElement.style.setProperty('--scroll-depth', scrollPercent.toFixed(2));
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   const handleLoadingComplete = useCallback(() => {
-    // Guard against multiple calls
-    if (loadingCompleteRef.current) {
-      return
-    }
-    loadingCompleteRef.current = true
-
-    // Add delay to allow fade animation to complete before unmounting
-    setTimeout(() => {
-      setIsLoading(false)
-    }, 500)
-  }, [])
+    if (loadingCompleteRef.current) return;
+    loadingCompleteRef.current = true;
+    setTimeout(() => setIsLoading(false), 500);
+  }, []);
 
   if (isLoading) {
     return <CinematicIntro onComplete={handleLoadingComplete} />
   }
 
   return (
-    <div className="min-h-screen bg-midnight">
-      {/* Global Particle System */}
+    <div className="min-h-screen bg-base">
       <GlobalParticles enabled={false} intensity="medium" />
-
-      {/* Global Ambient Effects (Grain, Scanlines, Flicker) */}
-      <div className="global-ambient-overlay">
-        <div className="global-grain"></div>
-        <div className="global-scanlines"></div>
-        <div className="global-vignette"></div>
-      </div>
-
-      {/* Navigation */}
       <SlashNavbar />
-
-      {/* Page content - lazy loaded with Suspense */}
       <div className="pt-24">
         <Suspense fallback={<PageLoader />}>
           <Routes>
@@ -87,8 +75,6 @@ const AppContent = () => {
             <Route path="/contact" element={<ContactNoir />} />
             <Route path="/about" element={<About />} />
           </Routes>
-
-          {/* Footer - inside Suspense so it loads after page content */}
           <Footer />
         </Suspense>
       </div>
@@ -96,16 +82,15 @@ const AppContent = () => {
   )
 }
 
-import ErrorBoundary from './components/ErrorBoundary'
-
 function App() {
   useEffect(() => {
-    console.log("PRISMA APP V2.1 - HASHROUTER ACTIVE - CASE HEADER STRIP OVERHAUL");
+    console.log("PRISMA APP V2.3 - TRUE DARK UI SYSTEM ACTIVE");
   }, []);
 
   return (
     <ErrorBoundary>
       <BrowserRouter basename="/prisma-event-page">
+        <ForensicCursor />
         <NavigationProvider>
           <AppContent />
         </NavigationProvider>
@@ -115,5 +100,3 @@ function App() {
 }
 
 export default App
-
-
