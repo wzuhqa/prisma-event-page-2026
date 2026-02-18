@@ -2,6 +2,7 @@ import { useRef, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import gsap from 'gsap';
 import styles from './HeroSection.module.css';
+import GlitchTitle from '../common/GlitchTitle/GlitchTitle';
 
 const HeroSection = () => {
   const sectionRef = useRef(null);
@@ -114,7 +115,7 @@ const HeroSection = () => {
             <div className={styles.titleRow}>
               <div className={styles.universityBadge}>SRM UNIVERSITY DELHI-NCR</div>
               <div className={styles.titleWrapper}>
-                <h1 className={styles.prismaTitle}>PRISMA</h1>
+                <GlitchTitle text="PRISMA" />
                 <span className={styles.reopenNote}>Reopen inquiry?</span>
               </div>
             </div>
@@ -146,11 +147,11 @@ const HeroSection = () => {
                 className={styles.tabButton}
                 onMouseEnter={() => {
                   setInvestigateHover(true);
-                  document.body.classList.add('psychological-spotlight');
+                  if (typeof document !== 'undefined') document.body.classList.add('psychological-spotlight');
                 }}
                 onMouseLeave={() => {
                   setInvestigateHover(false);
-                  document.body.classList.remove('psychological-spotlight');
+                  if (typeof document !== 'undefined') document.body.classList.remove('psychological-spotlight');
                 }}
               >
                 <div className={styles.scannerLine} />
@@ -161,8 +162,12 @@ const HeroSection = () => {
               <Link
                 to="/register"
                 className={styles.approvalClip}
-                onMouseEnter={() => document.body.classList.add('psychological-spotlight')}
-                onMouseLeave={() => document.body.classList.remove('psychological-spotlight')}
+                onMouseEnter={() => {
+                  if (typeof document !== 'undefined') document.body.classList.add('psychological-spotlight');
+                }}
+                onMouseLeave={() => {
+                  if (typeof document !== 'undefined') document.body.classList.remove('psychological-spotlight');
+                }}
               >
                 <div className={styles.clipPin} />
                 <div className={styles.paperRipple} />
