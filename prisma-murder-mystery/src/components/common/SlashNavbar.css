@@ -1,0 +1,1292 @@
+/* ============================================
+   SLASH NAVBAR - CINEMATIC KATANA TRANSITION
+   Ghost of Tsushima inspired razor-sharp cuts
+   Dark Murder Mystery Theme
+   ============================================ */
+
+/* ===== CSS VARIABLES ===== */
+:root {
+  --sl-primary-red: var(--color-blood);
+  --sl-bright-red: var(--color-blood-light);
+  --sl-dark-bg: var(--color-midnight);
+  --sl-mid-bg: var(--color-noir);
+  --sl-text-dim: #666;
+  --sl-text-light: #888;
+  --sl-text-bright: #ccc;
+  --sl-white: #fff;
+}
+
+/* ===== MAIN CONTAINER ===== */
+.slash-navbar-container {
+  position: relative;
+  min-height: 100vh;
+  background: var(--sl-dark-bg);
+  overflow-x: hidden;
+}
+
+/* ============================================
+   KATANA SLASH OVERLAY
+   The dramatic blade transition effect
+   ============================================ */
+
+.slash-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 9999;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+/* ----- Film Grain Overlay ----- */
+.slash-grain {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+  opacity: 0.02;
+  mix-blend-mode: overlay;
+  animation: grainPulse 0.5s ease-in-out infinite;
+  will-change: opacity;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
+
+@keyframes grainPulse {
+
+  0%,
+  100% {
+    opacity: 0.03;
+  }
+
+  50% {
+    opacity: 0.05;
+  }
+}
+
+/* ----- Anticipation Phase ----- */
+.slash-overlay--anticipation {
+  animation: anticipationZoom 120ms ease-out forwards;
+}
+
+@keyframes anticipationZoom {
+  0% {
+    transform: scale(1);
+  }
+
+  100% {
+    transform: scale(1.02);
+  }
+}
+
+/* Anticipation glow at click point */
+.anticipation-glow {
+  position: absolute;
+  width: 150px;
+  height: 150px;
+  transform: translate(-50%, -50%);
+  background: radial-gradient(circle,
+      rgba(196, 30, 58, 0.4) 0%,
+      rgba(196, 30, 58, 0.2) 30%,
+      transparent 70%);
+  border-radius: 50%;
+  animation: anticipationGlow 120ms ease-out forwards;
+  pointer-events: none;
+}
+
+@keyframes anticipationGlow {
+  0% {
+    transform: translate(-50%, -50%) scale(0.5);
+    opacity: 0;
+  }
+
+  50% {
+    opacity: 1;
+  }
+
+  100% {
+    transform: translate(-50%, -50%) scale(1.5);
+    opacity: 0.8;
+  }
+}
+
+/* ----- Impact Phase ----- */
+.slash-overlay--impact {
+  animation: impactShake 150ms ease-out forwards;
+}
+
+/* Dark Overlay with Red Tint - simplified for performance */
+.slash-darkness {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.85);
+  animation: darknessFadeIn 100ms ease-out forwards;
+  transform: translateZ(0);
+  will-change: opacity;
+}
+
+@keyframes darknessFadeIn {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
+/* Impact flash effect - simplified for performance */
+.impact-flash {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle at 30% 40%,
+      rgba(255, 255, 255, 0.2) 0%,
+      rgba(196, 30, 58, 0.15) 30%,
+      transparent 60%);
+  animation: flashPulse 150ms ease-out forwards;
+  transform: translateZ(0);
+  will-change: opacity, transform;
+}
+
+@keyframes flashPulse {
+  0% {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+
+  20% {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  100% {
+    opacity: 0;
+    transform: scale(1.2);
+  }
+}
+
+/* ----- Katana Slash Line ----- */
+/* 30-degree angle from top-left to bottom-right */
+.slash-line {
+  position: absolute;
+  top: -10%;
+  left: -10%;
+  width: 150%;
+  height: 150%;
+  transform-origin: 0 0;
+  animation: slashDraw 150ms ease-out forwards;
+  will-change: clip-path, opacity;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
+
+/* Core slash - 4px width */
+.slash-core {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 4px;
+  background: linear-gradient(90deg,
+      transparent 0%,
+      rgba(196, 30, 58, 0.3) 5%,
+      #c41e3a 15%,
+      #ff1744 50%,
+      #c41e3a 85%,
+      rgba(196, 30, 58, 0.3) 95%,
+      transparent 100%);
+  transform: rotate(30deg);
+  transform-origin: 0 0;
+  box-shadow:
+    0 0 2px #ff1744,
+    0 0 4px #c41e3a,
+    0 0 8px rgba(196, 30, 58, 0.5);
+  will-change: transform;
+  transform: translateZ(0) rotate(30deg);
+  backface-visibility: hidden;
+}
+
+/* Inner glow - 20px spread */
+.slash-glow {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 20px;
+  transform: rotate(30deg) translateY(-8px);
+  transform-origin: 0 0;
+  background: linear-gradient(90deg,
+      transparent 0%,
+      rgba(196, 30, 58, 0.1) 5%,
+      rgba(196, 30, 58, 0.4) 20%,
+      rgba(255, 23, 68, 0.6) 50%,
+      rgba(196, 30, 58, 0.4) 80%,
+      rgba(196, 30, 58, 0.1) 95%,
+      transparent 100%);
+  filter: blur(4px);
+  opacity: 0.9;
+  will-change: transform, opacity;
+  transform: translateZ(0) rotate(30deg) translateY(-8px);
+  backface-visibility: hidden;
+}
+
+/* Outer glow - motion blur effect */
+.slash-outer-glow {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 40px;
+  transform: rotate(30deg) translateY(-18px);
+  transform-origin: 0 0;
+  background: linear-gradient(90deg,
+      transparent 0%,
+      rgba(196, 30, 58, 0.05) 10%,
+      rgba(196, 30, 58, 0.2) 30%,
+      rgba(196, 30, 58, 0.3) 50%,
+      rgba(196, 30, 58, 0.2) 70%,
+      rgba(196, 30, 58, 0.05) 90%,
+      transparent 100%);
+  filter: blur(8px);
+  opacity: 0.7;
+  will-change: transform, opacity;
+  transform: translateZ(0) rotate(30deg) translateY(-18px);
+  backface-visibility: hidden;
+}
+
+/* Motion blur trail */
+.slash-motion-blur {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 60px;
+  transform: rotate(30deg) translateY(-28px);
+  transform-origin: 0 0;
+  background: linear-gradient(90deg,
+      transparent 0%,
+      rgba(196, 30, 58, 0.02) 20%,
+      rgba(196, 30, 58, 0.1) 40%,
+      rgba(196, 30, 58, 0.05) 60%,
+      transparent 80%);
+  filter: blur(10px);
+  opacity: 0.5;
+  will-change: transform, opacity;
+  transform: translateZ(0) rotate(30deg) translateY(-28px);
+  backface-visibility: hidden;
+}
+
+@keyframes slashDraw {
+  0% {
+    clip-path: polygon(0 0, 0 0, 0 100%, 0 100%);
+    opacity: 0;
+  }
+
+  5% {
+    opacity: 1;
+  }
+
+  100% {
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+    opacity: 1;
+  }
+}
+
+/* ----- Darkness Beat Phase ----- */
+.slash-overlay--darkness .slash-darkness {
+  animation: darknessBeat 150ms ease-in-out forwards;
+}
+
+@keyframes darknessBeat {
+  0% {
+    background: linear-gradient(135deg,
+        rgba(196, 30, 58, 0.15) 0%,
+        rgba(0, 0, 0, 0.8) 20%,
+        rgba(0, 0, 0, 0.8) 80%,
+        rgba(196, 30, 58, 0.15) 100%);
+  }
+
+  100% {
+    background: linear-gradient(135deg,
+        rgba(0, 0, 0, 0.95) 0%,
+        rgba(0, 0, 0, 1) 50%,
+        rgba(0, 0, 0, 0.95) 100%);
+  }
+}
+
+.darkness-beat {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: #000;
+  animation: darknessPulse 150ms ease-in-out forwards;
+}
+
+@keyframes darknessPulse {
+  0% {
+    opacity: 0;
+  }
+
+  50% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+  }
+}
+
+/* ----- Aftermath Phase ----- */
+.slash-overlay--aftermath .slash-darkness {
+  animation: aftermathFade 300ms ease-out forwards;
+}
+
+@keyframes aftermathFade {
+  0% {
+    background: #000;
+    opacity: 1;
+  }
+
+  100% {
+    background: transparent;
+    opacity: 0;
+  }
+}
+
+/* Aftermath particles/smoke - disabled for performance */
+.aftermath-particles {
+  display: none;
+}
+
+@keyframes particleDrift {
+  0% {
+    opacity: 0;
+    transform: scale(0.8) translateY(10px);
+  }
+
+  30% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+    transform: scale(1.3) translateY(-20px);
+  }
+}
+
+/* ----- Red Ambient Vignette ----- */
+.slash-vignette {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(ellipse at center,
+      transparent 0%,
+      transparent 50%,
+      rgba(196, 30, 58, 0.1) 80%,
+      rgba(196, 30, 58, 0.2) 100%);
+  pointer-events: none;
+}
+
+/* ----- Screen Shake Effect ----- */
+/* Simplified for performance */
+.slash-shake {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  animation: screenShake 100ms ease-out;
+  transform: translateZ(0);
+  will-change: transform;
+}
+
+@keyframes screenShake {
+
+  0%,
+  100% {
+    transform: translate(0, 0);
+  }
+
+  50% {
+    transform: translate(-2px, 1px);
+  }
+}
+
+/* ============================================
+   NAVBAR STYLES
+   Fixed position, dark murder mystery aesthetic
+   ============================================ */
+
+.slash-navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 40px;
+  background: linear-gradient(180deg, #0a0a0a 0%, #111111 100%);
+  border-bottom: 1px solid rgba(196, 30, 58, 0.2);
+  z-index: 1000;
+  box-sizing: border-box;
+  box-shadow: 0 2px 20px rgba(0, 0, 0, 0.5);
+  transition: box-shadow 0.3s ease, border-color 0.3s ease;
+}
+
+/* Ambient glow on navbar during interaction */
+.slash-navbar--ambient-glow {
+  box-shadow:
+    0 2px 20px rgba(0, 0, 0, 0.5),
+    0 0 30px rgba(196, 30, 58, 0.15),
+    inset 0 0 30px rgba(196, 30, 58, 0.05);
+  border-bottom-color: rgba(196, 30, 58, 0.4);
+}
+
+/* Ambient glow bar - subtle red line at bottom */
+.ambient-glow-bar {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 1px;
+  background: linear-gradient(90deg,
+      transparent 0%,
+      rgba(196, 30, 58, 0.3) 20%,
+      rgba(196, 30, 58, 0.6) 50%,
+      rgba(196, 30, 58, 0.3) 80%,
+      transparent 100%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.slash-navbar--ambient-glow .ambient-glow-bar {
+  opacity: 1;
+  animation: ambientPulse 0.5s ease-in-out infinite;
+}
+
+@keyframes ambientPulse {
+
+  0%,
+  100% {
+    opacity: 0.5;
+  }
+
+  50% {
+    opacity: 1;
+  }
+}
+
+/* ----- Brand Logo ----- */
+.navbar-brand {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  position: relative;
+  align-items: flex-start;
+  line-height: 1;
+}
+
+.navbar-brand .brand-main {
+  display: flex;
+  align-items: baseline;
+  gap: 2px;
+}
+
+.brand-text {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: #c41e3a;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  text-shadow: 0 0 20px rgba(196, 30, 58, 0.5);
+  line-height: 1;
+}
+
+.brand-year {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 1rem;
+  font-weight: 400;
+  color: #ff6b6b;
+  letter-spacing: 0.1em;
+  margin-left: 4px;
+  text-shadow: 0 0 15px rgba(255, 107, 107, 0.5);
+}
+
+.brand-subtitle {
+  font-family: 'Inter', 'Segoe UI', sans-serif;
+  font-size: 0.65rem;
+  color: #888;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+.brand-tagline {
+  font-family: 'Inter', 'Segoe UI', sans-serif;
+  font-size: 0.55rem;
+  color: #666;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  opacity: 0.8;
+}
+
+/* Japanese subtitle in subtle Kanji style */
+.brand-jp {
+  position: absolute;
+  right: -30px;
+  top: 50%;
+  transform: translateY(-50%) rotate(90deg);
+  font-family: 'Noto Sans JP', 'Yu Gothic', sans-serif;
+  font-size: 0.5rem;
+  color: rgba(196, 30, 58, 0.4);
+  letter-spacing: 0.5em;
+  opacity: 0.8;
+}
+
+/* ----- Navigation Menu ----- */
+.navbar-menu {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.navbar-item {
+  position: relative;
+}
+
+/* ============================================
+   NAV LINK STYLES
+   With metallic shimmer and katana effects
+   ============================================ */
+
+.navbar-link {
+  background: none;
+  border: none;
+  padding: 12px 20px;
+  font-family: 'Inter', 'Segoe UI', sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--sl-text-light);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  cursor: pointer;
+  position: relative;
+  outline: none;
+  overflow: visible;
+  transition:
+    color 0.3s ease,
+    transform 0.2s ease,
+    text-shadow 0.3s ease;
+}
+
+/* Link text wrapper */
+.link-text {
+  position: relative;
+  z-index: 2;
+}
+
+/* Shimmer effect removed (intentionally) */
+
+/* ----- Hover Effects ----- */
+.navbar-link:hover {
+  color: var(--sl-text-bright);
+  transform: skewX(-5deg) scale(1.02);
+  text-shadow:
+    0 0 10px rgba(196, 30, 58, 0.3),
+    0 0 20px rgba(196, 30, 58, 0.2);
+}
+
+.navbar-link:focus-visible {
+  color: var(--sl-primary-red);
+  outline: 2px solid rgba(196, 30, 58, 0.5);
+  outline-offset: 4px;
+  border-radius: 2px;
+}
+
+/* ----- Spark Particles ----- */
+.spark-particle {
+  position: absolute;
+  width: 3px;
+  height: 3px;
+  background: radial-gradient(circle,
+      #fff 0%,
+      rgba(255, 255, 255, 0.8) 30%,
+      rgba(196, 30, 58, 0.8) 70%,
+      transparent 100%);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 3;
+  animation: sparkFly 0.4s ease-out forwards;
+}
+
+@keyframes sparkFly {
+  0% {
+    opacity: 1;
+    transform: translate(0, 0) scale(1);
+  }
+
+  50% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+    transform: translate(var(--spark-x, 20px), var(--spark-y, -20px)) scale(0);
+  }
+}
+
+/* Generate random spark directions */
+.navbar-link--hovered .spark-particle:nth-child(1) {
+  --spark-x: 15px;
+  --spark-y: -25px;
+}
+
+.navbar-link--hovered .spark-particle:nth-child(2) {
+  --spark-x: -20px;
+  --spark-y: -15px;
+}
+
+.navbar-link--hovered .spark-particle:nth-child(3) {
+  --spark-x: 25px;
+  --spark-y: 10px;
+}
+
+.navbar-link--hovered .spark-particle:nth-child(4) {
+  --spark-x: -15px;
+  --spark-y: 20px;
+}
+
+.navbar-link--hovered .spark-particle:nth-child(5) {
+  --spark-x: 10px;
+  --spark-y: -30px;
+}
+
+.navbar-link--hovered .spark-particle:nth-child(6) {
+  --spark-x: -25px;
+  --spark-y: -5px;
+}
+
+/* ----- Katana Underline ----- */
+.katana-underline {
+  position: absolute;
+  bottom: 8px;
+  left: 50%;
+  transform: translateX(-50%) scaleX(0);
+  width: 30px;
+  height: 2px;
+  background: linear-gradient(90deg,
+      transparent 0%,
+      rgba(196, 30, 58, 0.5) 20%,
+      #c41e3a 50%,
+      rgba(196, 30, 58, 0.5) 80%,
+      transparent 100%);
+  transform-origin: center;
+  transition: transform 0.2s ease;
+}
+
+.navbar-link:hover .katana-underline,
+.navbar-link--hovered .katana-underline {
+  transform: translateX(-50%) scaleX(1);
+  box-shadow:
+    0 0 10px #c41e3a,
+    0 0 20px rgba(196, 30, 58, 0.5);
+}
+
+/* ----- Active State ----- */
+.navbar-link--active {
+  color: var(--sl-white);
+  text-shadow:
+    0 0 10px rgba(196, 30, 58, 0.5),
+    0 0 20px rgba(196, 30, 58, 0.3);
+}
+
+.navbar-link--active::after {
+  content: '';
+  position: absolute;
+  bottom: 8px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 30px;
+  height: 2px;
+  background: #c41e3a;
+  box-shadow:
+    0 0 10px #c41e3a,
+    0 0 20px rgba(196, 30, 58, 0.5);
+  animation: underlineGlow 2s ease-in-out infinite;
+}
+
+@keyframes underlineGlow {
+
+  0%,
+  100% {
+    box-shadow:
+      0 0 10px #c41e3a,
+      0 0 20px rgba(196, 30, 58, 0.5);
+  }
+
+  50% {
+    box-shadow:
+      0 0 15px #c41e3a,
+      0 0 30px rgba(196, 30, 58, 0.7);
+  }
+}
+
+/* Disabled state */
+.navbar-link:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+/* ============================================
+   SECTION STYLES
+   Full viewport with unique dark gradients
+   ============================================ */
+
+.sections-container {
+  padding-top: 64px;
+  position: relative;
+  min-height: 100vh;
+}
+
+.section {
+  position: absolute;
+  top: 64px;
+  left: 0;
+  width: 100%;
+  min-height: calc(100vh - 64px);
+  height: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 400ms ease-in-out, visibility 400ms;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.section--active {
+  opacity: 1;
+  visibility: visible;
+  position: relative;
+  pointer-events: auto;
+}
+
+/* ----- Vignette Effect ----- */
+.section-vignette {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(ellipse at center,
+      transparent 0%,
+      transparent 50%,
+      rgba(0, 0, 0, 0.4) 80%,
+      rgba(0, 0, 0, 0.7) 100%);
+  pointer-events: none;
+}
+
+/* ----- Section Content ----- */
+.section-content {
+  text-align: center;
+  max-width: 800px;
+  padding: 40px;
+  position: relative;
+  z-index: 1;
+}
+
+.section-title {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 4rem;
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 24px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  text-shadow:
+    0 0 40px rgba(196, 30, 58, 0.3),
+    0 2px 4px rgba(0, 0, 0, 0.5);
+  line-height: 1.2;
+}
+
+.section-description {
+  font-family: 'Inter', 'Segoe UI', sans-serif;
+  font-size: 1.1rem;
+  color: #999;
+  line-height: 1.8;
+  letter-spacing: 0.05em;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+/* ============================================
+   HAMBURGER MENU - MOBILE TOGGLE
+   ============================================ */
+
+.hamburger-toggle {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 40px;
+  height: 40px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  gap: 5px;
+  z-index: 1001;
+}
+
+.hamburger-line {
+  width: 24px;
+  height: 2px;
+  background: var(--sl-text-light);
+  transition: all 0.3s ease;
+  transform-origin: center;
+}
+
+.hamburger-toggle--open .hamburger-line:nth-child(1) {
+  transform: translateY(7px) rotate(45deg);
+}
+
+.hamburger-toggle--open .hamburger-line:nth-child(2) {
+  opacity: 0;
+}
+
+.hamburger-toggle--open .hamburger-line:nth-child(3) {
+  transform: translateY(-7px) rotate(-45deg);
+}
+
+/* ============================================
+   RESPONSIVE DESIGN
+   ============================================ */
+
+@media (max-width: 1024px) {
+  .section-title {
+    font-size: 3rem;
+  }
+
+  .navbar-link {
+    padding: 10px 16px;
+    font-size: 13px;
+  }
+
+  .brand-jp {
+    display: none;
+  }
+
+  .brand-year {
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .slash-navbar {
+    padding: 0 20px;
+    height: 70px;
+  }
+
+  /* Show hamburger on mobile */
+  .hamburger-toggle {
+    display: flex;
+  }
+
+  /* Mobile menu - hidden by default */
+  .navbar-menu {
+    position: fixed;
+    top: 60px;
+    left: 0;
+    width: 100%;
+    height: calc(100vh - 60px);
+    background: linear-gradient(180deg, #0a0a0a 0%, #111111 100%);
+    flex-direction: column;
+    justify-content: flex-start;
+    padding-top: 40px;
+    gap: 0;
+    transform: translateX(-100%);
+    transition: transform 0.3s ease;
+    z-index: 999;
+  }
+
+  .navbar-menu--open {
+    transform: translateX(0);
+  }
+
+  .navbar-item {
+    width: 100%;
+    text-align: center;
+  }
+
+  .navbar-link {
+    width: 100%;
+    padding: 16px 24px;
+    font-size: 14px;
+  }
+
+  .navbar-link {
+    padding: 8px 12px;
+    font-size: 12px;
+    letter-spacing: 1.5px;
+  }
+
+  .brand-text {
+    font-size: 1.2rem;
+  }
+
+  .brand-year {
+    font-size: 0.8rem;
+  }
+
+  .brand-subtitle {
+    font-size: 0.5rem;
+  }
+
+  .brand-tagline {
+    display: none;
+  }
+
+  .section {
+    top: 60px;
+    min-height: calc(100vh - 60px);
+  }
+
+  .sections-container {
+    padding-top: 60px;
+  }
+
+  .section-title {
+    font-size: 2.5rem;
+    letter-spacing: 0.1em;
+  }
+
+  .section-description {
+    font-size: 1rem;
+    padding: 0 10px;
+  }
+
+  .section-content {
+    padding: 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .navbar-menu {
+    gap: 0;
+  }
+
+  .navbar-link {
+    padding: 8px 8px;
+    font-size: 11px;
+    letter-spacing: 1px;
+  }
+
+  .section-title {
+    font-size: 2rem;
+  }
+
+  .brand-text {
+    font-size: 1rem;
+    letter-spacing: 0.15em;
+  }
+
+  .brand-year {
+    display: none;
+  }
+
+  .brand-subtitle {
+    display: none;
+  }
+}
+
+/* ============================================
+   REDUCED MOTION PREFERENCES
+   Accessibility support
+   ============================================ */
+
+@media (prefers-reduced-motion: reduce) {
+
+  .slash-line,
+  .slash-darkness,
+  .slash-shake,
+  .slash-core,
+  .slash-glow,
+  .slash-outer-glow,
+  .shimmer-effect,
+  .spark-particle,
+  .katana-underline,
+  .slash-overlay,
+  .anticipation-glow,
+  .impact-flash,
+  .darkness-beat,
+  .aftermath-particles {
+    animation: none !important;
+    transition: none !important;
+  }
+
+  .slash-darkness {
+    opacity: 0.5;
+  }
+
+  .section {
+    transition: opacity 0.2s ease;
+  }
+
+  .navbar-link--active::after {
+    animation: none;
+  }
+
+  @keyframes slashDraw {
+
+    from,
+    to {
+      clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+      opacity: 1;
+    }
+  }
+}
+
+/* ============================================
+   BLOOD DRIP EFFECT (Bonus)
+   Blood dripping at slash end point
+   ============================================ */
+
+.slash-line::after {
+  content: '';
+  position: absolute;
+  bottom: -20px;
+  right: 10%;
+  width: 3px;
+  height: 0;
+  background: linear-gradient(180deg,
+      #c41e3a 0%,
+      rgba(196, 30, 58, 0.5) 50%,
+      transparent 100%);
+  animation: bloodDrip 600ms ease-out 300ms forwards;
+  border-radius: 0 0 50% 50%;
+}
+
+@keyframes bloodDrip {
+  0% {
+    height: 0;
+    opacity: 0;
+  }
+
+  50% {
+    height: 30px;
+    opacity: 0.8;
+  }
+
+  100% {
+    height: 50px;
+    opacity: 0;
+  }
+}
+
+/* ============================================
+   SUBTLE FLICKER ON SLASH
+   ============================================ */
+
+@keyframes slashFlicker {
+
+  0%,
+  100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0.95;
+  }
+}
+
+.slash-line {
+  animation: slashDraw 150ms ease-out forwards, slashFlicker 50ms ease-in-out 2;
+}
+
+/* ============================================
+   HORROR THEME EXTENSIONS
+   Ember particles, Blood drips, and Glitches
+   ============================================ */
+
+.shimmer-particle {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 10;
+  will-change: transform, opacity;
+  filter: blur(1px);
+}
+
+.shimmer-particle--subtle {
+  box-shadow: 0 0 4px rgba(164, 0, 0, 0.4);
+}
+
+.shimmer-particle--bright {
+  box-shadow: 0 0 10px rgba(255, 149, 0, 0.8), 0 0 20px rgba(255, 149, 0, 0.4);
+  filter: blur(0.5px);
+}
+
+.shimmer-particle--heavy {
+  box-shadow: 0 0 3px rgba(51, 0, 0, 0.9);
+  filter: blur(2px);
+  background: #200000 !important;
+}
+
+.blood-container {
+  position: absolute;
+  bottom: 12px;
+  left: 0;
+  width: 100%;
+  height: 60px;
+  pointer-events: none;
+  z-index: 5;
+}
+
+.blood-underline {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0;
+  height: 1px;
+  background: #a40000;
+  transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1), height 0.4s ease;
+  box-shadow: 0 0 5px rgba(139, 0, 0, 0.5);
+}
+
+.navbar-link--hovered .blood-underline {
+  width: 90%;
+  height: 3px;
+  background: linear-gradient(90deg, #4a0000, #a40000, #4a0000);
+}
+
+.blood-drop {
+  position: absolute;
+  top: 2px;
+  width: 3px;
+  height: 3px;
+  background: #a40000;
+  border-radius: 50%;
+  opacity: 0;
+  transform-origin: top center;
+  filter: drop-shadow(0 0 2px rgba(0, 0, 0, 0.8));
+}
+
+.navbar-link--hovered .blood-drop {
+  animation: blood-drop-flow 2.5s cubic-bezier(0.45, 0.05, 0.55, 0.95) forwards;
+}
+
+@keyframes blood-drop-flow {
+  0% {
+    opacity: 0;
+    transform: scale(0.5) translateY(0);
+  }
+
+  20% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+
+  45% {
+    transform: scaleX(0.8) scaleY(1.8) translateY(5px);
+    border-radius: 40% 40% 50% 50%;
+  }
+
+  75% {
+    transform: scaleX(0.6) scaleY(3.5) translateY(25px);
+    opacity: 1;
+  }
+
+  90% {
+    opacity: 0.8;
+  }
+
+  100% {
+    transform: scaleX(0.4) scaleY(5) translateY(45px);
+    opacity: 0;
+    border-radius: 20% 20% 50% 50%;
+  }
+}
+
+.static-flash {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+  opacity: 0;
+  pointer-events: none;
+  z-index: 100;
+  mix-blend-mode: overlay;
+}
+
+.navbar-link--glitching .static-flash {
+  animation: static-pulse 0.2s ease-out infinite;
+}
+
+@keyframes static-pulse {
+  0% {
+    opacity: 0;
+  }
+
+  50% {
+    opacity: 0.3;
+    transform: scale(1.1) translateX(5px);
+  }
+
+  100% {
+    opacity: 0;
+  }
+}
+
+.navbar-link--glitching {
+  animation: text-glitch 0.15s infinite;
+}
+
+@keyframes text-glitch {
+  0% {
+    transform: translate(0) skew(0);
+  }
+
+  20% {
+    transform: translate(-2px, 1px) skew(5deg);
+  }
+
+  40% {
+    transform: translate(2px, -1px) skew(-5deg);
+  }
+
+  60% {
+    transform: translate(-1px, -2px) skew(2deg);
+    filter: hue-rotate(90deg);
+  }
+
+  80% {
+    transform: translate(1px, 2px) skew(-2deg);
+  }
+
+  100% {
+    transform: translate(0) skew(0);
+  }
+}
