@@ -1,14 +1,13 @@
 /* EventLineupReveal - Cinematic Horror-Tech Event Lineup Section */
 
-/* CSS Variables */
+/* CSS Variables (V2.6 Noir Refinement) */
 :root {
-  --lineup-black: #000000;
-  --lineup-navy: #0b0b1a;
-  --lineup-blood: #8B0000;
-  --lineup-blood-light: #a52020;
-  --lineup-gold: #c9a227;
-  --lineup-gold-muted: #8a7620;
-  --lineup-cyan: #00ffff;
+  --lineup-black: #060608;
+  --lineup-navy: #0d0d12;
+  --lineup-blood: #7A0E12;
+  --lineup-blood-light: #991217;
+  --lineup-silver: #B3B3B8;
+  --lineup-charcoal: #1A1A1E;
 }
 
 /* Main Hero Section */
@@ -21,9 +20,8 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(180deg, var(--lineup-black) 0%, var(--lineup-navy) 100%);
-  /* Add vertical breathing room (top + bottom) */
-  padding: 110px 20px 130px;
+  background-color: var(--lineup-black);
+  padding: 120px 20px;
 }
 
 @keyframes systemFlicker {
@@ -67,40 +65,9 @@
   z-index: 1;
 }
 
-/* Hidden Binary Code Background */
+/* Binary background removed for V2.6 Noir - Replacing with Grain/Texture in JSX if needed */
 .lineup-binary-bg {
-  position: absolute;
-  inset: 0;
-  z-index: 0;
-  pointer-events: none;
-  opacity: 0.06;
-  font-family: 'Courier New', monospace;
-  font-size: 10px;
-  line-height: 1.2;
-  color: var(--lineup-gold);
-  overflow: hidden;
-  word-break: break-all;
-  letter-spacing: 2px;
-  user-select: none;
-}
-
-.lineup-binary-text {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  white-space: nowrap;
-  animation: binaryDrift 30s linear infinite;
-}
-
-@keyframes binaryDrift {
-  0% {
-    transform: translate(-50%, -50%);
-  }
-
-  100% {
-    transform: translate(-50%, 50%);
-  }
+  display: none;
 }
 
 /* Animated Smoke/Fog */
@@ -295,58 +262,9 @@
   }
 }
 
-/* Digital Noise in Corners */
+/* Digital Noise removed for Noir V2.6 */
 .lineup-noise-container {
-  position: absolute;
-  inset: 0;
-  z-index: 6;
-  pointer-events: none;
-}
-
-.lineup-noise {
-  position: absolute;
-  width: 30%;
-  height: 30%;
-  background: radial-gradient(circle at center,
-      transparent 0%,
-      rgba(0, 0, 0, 0.3) 100%);
-  animation: noisePulse 3s ease-in-out infinite;
-}
-
-.corner-tl {
-  top: 0;
-  left: 0;
-  animation-delay: 0s;
-}
-
-.corner-tr {
-  top: 0;
-  right: 0;
-  animation-delay: 1s;
-}
-
-.corner-bl {
-  bottom: 0;
-  left: 0;
-  animation-delay: 2s;
-}
-
-.corner-br {
-  bottom: 0;
-  right: 0;
-  animation-delay: 1.5s;
-}
-
-@keyframes noisePulse {
-
-  0%,
-  100% {
-    opacity: 0.3;
-  }
-
-  50% {
-    opacity: 0.6;
-  }
+  display: none;
 }
 
 /* Vignette Effect */
@@ -394,40 +312,9 @@
   }
 }
 
-/* Flickering Pixel Fragments */
+/* Pixel Fragments removed for Noir V2.6 */
 .lineup-pixel-fragment {
-  position: absolute;
-  width: 4px;
-  height: 4px;
-  background: var(--lineup-blood);
-  opacity: 0;
-  z-index: 9;
-  pointer-events: none;
-  animation: pixelFlicker 2s ease-in-out infinite;
-}
-
-@keyframes pixelFlicker {
-
-  0%,
-  100% {
-    opacity: 0;
-  }
-
-  50% {
-    opacity: 0.6;
-  }
-
-  52% {
-    opacity: 0;
-  }
-
-  54% {
-    opacity: 0.4;
-  }
-
-  56% {
-    opacity: 0;
-  }
+  display: none;
 }
 
 /* Top Indicator Bar */
@@ -562,79 +449,11 @@
   z-index: 3;
 }
 
-/* RGB Split Effect */
+/* RGB Split removed for Noir V2.6 */
 .lineup-rgb-red,
 .lineup-rgb-green,
 .lineup-rgb-blue {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  font-family: 'Playfair Display', Georgia, serif;
-  font-size: inherit;
-  font-weight: 700;
-  pointer-events: none;
-  opacity: 0.15;
-}
-
-.lineup-rgb-red {
-  color: #ff0000;
-  transform: translateX(-3px);
-  animation: rgbShiftRed 3s ease-in-out infinite;
-}
-
-.lineup-rgb-green {
-  color: #00ff00;
-  transform: translateX(0);
-  animation: rgbShiftGreen 3s ease-in-out infinite;
-}
-
-.lineup-rgb-blue {
-  color: #0000ff;
-  transform: translateX(3px);
-  animation: rgbShiftBlue 3s ease-in-out infinite;
-}
-
-@keyframes rgbShiftRed {
-
-  0%,
-  100% {
-    transform: translateX(-2px);
-    opacity: 0.1;
-  }
-
-  50% {
-    transform: translateX(-4px);
-    opacity: 0.2;
-  }
-}
-
-@keyframes rgbShiftGreen {
-
-  0%,
-  100% {
-    transform: translateX(0);
-    opacity: 0.1;
-  }
-
-  50% {
-    transform: translateX(2px);
-    opacity: 0.15;
-  }
-}
-
-@keyframes rgbShiftBlue {
-
-  0%,
-  100% {
-    transform: translateX(2px);
-    opacity: 0.1;
-  }
-
-  50% {
-    transform: translateX(4px);
-    opacity: 0.2;
-  }
+  display: none;
 }
 
 /* Glitch Slices */
@@ -1022,71 +841,23 @@
   filter: brightness(1.2);
 }
 
-/* Cyan Edge Glitch Accents */
+/* Cyan edge removed for Noir V2.6 */
 .lineup-cyan-edge {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  z-index: 18;
-  opacity: 0.15;
+  display: none;
 }
 
-.lineup-cyan-edge::before,
-.lineup-cyan-edge::after {
-  content: '';
-  position: absolute;
-  background: var(--lineup-cyan);
-}
-
-.lineup-cyan-edge::before {
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 1px;
-  animation: cyanEdgeGlitch 8s ease-in-out infinite;
-}
-
-.lineup-cyan-edge::after {
-  bottom: 0;
-  left: 0;
-  right: 0;
-  height: 1px;
-  animation: cyanEdgeGlitch 8s ease-in-out infinite reverse;
-}
-
-@keyframes cyanEdgeGlitch {
-
-  0%,
-  90%,
-  100% {
-    opacity: 0;
-  }
-
-  92% {
-    opacity: 0.3;
-  }
-
-  94% {
-    opacity: 0.1;
-  }
-
-  96% {
-    opacity: 0.25;
-  }
-}
-
-/* Chromatic Aberration Overlay */
+/* Chromatic Aberration Overlay (Muted for Noir V2.6) */
 .lineup-chromatic {
   position: absolute;
   inset: 0;
   z-index: 20;
   pointer-events: none;
   background: linear-gradient(90deg,
-      rgba(255, 0, 0, 0.02) 0%,
+      rgba(255, 0, 0, 0.01) 0%,
       transparent 20%,
       transparent 80%,
-      rgba(0, 0, 255, 0.02) 100%);
-  mix-blend-mode: screen;
+      rgba(0, 0, 255, 0.01) 100%);
+  mix-blend-mode: multiply;
 }
 
 /* Responsive Adjustments */

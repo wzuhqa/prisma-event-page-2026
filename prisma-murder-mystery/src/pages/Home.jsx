@@ -2,6 +2,7 @@ import { lazy, Suspense } from 'react'
 import HeroSection from '../components/hero/HeroSection'
 
 // Lazy load heavy sections for better performance
+const CaseSummaryPanel = lazy(() => import('../components/home/CaseSummaryPanel/CaseSummaryPanel'))
 const EnhancedCountdown = lazy(() => import('../components/home/EnhancedCountdown'))
 const EventLineupReveal = lazy(() => import('../components/home/EventLineupReveal'))
 const SpecterArchive = lazy(() => import('../components/home/SpecterArchive'))
@@ -23,6 +24,11 @@ const Home = () => {
     <main className="min-h-screen">
       {/* ===== HERO SECTION ===== */}
       <HeroSection />
+
+      {/* ===== SECTION 2: CASE SUMMARY PANEL (V2.6) ===== */}
+      <Suspense fallback={<SectionLoader />}>
+        <CaseSummaryPanel />
+      </Suspense>
 
       {/* ===== ENHANCED COUNTDOWN SECTION ===== */}
       <section className="relative">

@@ -10,19 +10,15 @@
   perspective: 1000px;
 }
 
-/* Background Gradient */
+/* Background Gradient (Noir V2.6) */
 .specter-bg-gradient {
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background: linear-gradient(180deg,
-      #000000 0%,
-      #0a0a1a 30%,
-      #050510 50%,
-      #0a0a1a 70%,
-      #000000 100%);
+  background-color: var(--bg-base);
+  /* #060608 */
   z-index: 0;
 }
 
@@ -202,70 +198,12 @@
   background: transparent;
 }
 
-.global-glitch.active .glitch-r {
-  background: rgba(255, 0, 0, 0.1);
-  animation: glitchR 0.15s steps(2) infinite;
-}
-
-.global-glitch.active .glitch-g {
-  background: rgba(0, 255, 0, 0.1);
-  animation: glitchG 0.15s steps(2) infinite;
-}
-
+/* Global Glitch (Muted for Noir V2.6) */
+.global-glitch.active .glitch-r,
+.global-glitch.active .glitch-g,
 .global-glitch.active .glitch-b {
-  background: rgba(0, 0, 255, 0.1);
-  animation: glitchB 0.15s steps(2) infinite;
-}
-
-@keyframes glitchR {
-  0% {
-    transform: translateX(-3px);
-    opacity: 0.5;
-  }
-
-  50% {
-    transform: translateX(3px);
-    opacity: 0.5;
-  }
-
-  100% {
-    transform: translateX(0);
-    opacity: 0;
-  }
-}
-
-@keyframes glitchG {
-  0% {
-    transform: translateX(3px);
-    opacity: 0.5;
-  }
-
-  50% {
-    transform: translateX(-3px);
-    opacity: 0.5;
-  }
-
-  100% {
-    transform: translateX(0);
-    opacity: 0;
-  }
-}
-
-@keyframes glitchB {
-  0% {
-    transform: translateY(-2px);
-    opacity: 0.5;
-  }
-
-  50% {
-    transform: translateY(2px);
-    opacity: 0.5;
-  }
-
-  100% {
-    transform: translateY(0);
-    opacity: 0;
-  }
+  background: rgba(122, 14, 18, 0.05);
+  /* Very subtle blood tint */
 }
 
 /* Ghost Silhouettes */
@@ -436,23 +374,21 @@
   margin-bottom: 20px;
 }
 
+/* Main Heading (Noir Refinement) */
 .specter-heading {
-  font-family: 'Cinzel', serif;
-  font-weight: 600;
-  font-size: clamp(2rem, 5vw, 4rem);
-  color: #b8860b;
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-size: clamp(2.5rem, 6vw, 4.5rem);
+  color: var(--text-header);
   text-align: center;
   margin-bottom: 20px;
   letter-spacing: 0.35em;
-  text-shadow:
-    0 0 10px rgba(184, 134, 11, 0.6),
-    0 0 20px rgba(184, 134, 11, 0.4),
-    0 0 30px rgba(184, 134, 11, 0.3),
-    0 0 40px rgba(184, 134, 11, 0.2);
+  text-transform: uppercase;
+  text-shadow: 0 4px 15px rgba(0, 0, 0, 0.8);
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 0.2em;
+  gap: 0.1em;
 }
 
 .heading-text,
@@ -498,54 +434,12 @@
   }
 }
 
-.specter-heading:hover .heading-text::before,
-.specter-heading:hover .heading-text::after,
-.specter-heading:hover .heading-sub::before,
-.specter-heading:hover .heading-sub::after {
-  content: attr(data-text);
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-}
-
-.specter-heading:hover .heading-text::before,
-.specter-heading:hover .heading-sub::before {
-  color: #ff0000;
-  animation: rgbSplitLeft 0.3s ease-in-out;
-  clip-path: inset(0 50% 0 0);
-}
-
-.specter-heading:hover .heading-text::after,
-.specter-heading:hover .heading-sub::after {
-  color: #00ffff;
-  animation: rgbSplitRight 0.3s ease-in-out;
-  clip-path: inset(0 0 0 50%);
-}
-
-@keyframes rgbSplitLeft {
-
-  0%,
-  100% {
-    transform: translateX(0);
-  }
-
-  50% {
-    transform: translateX(-3px);
-  }
-}
-
-@keyframes rgbSplitRight {
-
-  0%,
-  100% {
-    transform: translateX(0);
-  }
-
-  50% {
-    transform: translateX(3px);
-  }
+/* RGB Split removed for Noir V2.6 */
+.heading-text::before,
+.heading-text::after,
+.heading-sub::before,
+.heading-sub::after {
+  display: none;
 }
 
 /* Subheading */
@@ -656,24 +550,21 @@
 }
 
 /* Artist Card */
+/* Artist Card (Noir Charcoal Paper) */
 .artist-card {
   position: relative;
   width: 100%;
   max-width: 800px;
   margin: 0 auto;
-  background: rgba(10, 10, 26, 0.7);
-  backdrop-filter: blur(15px);
-  -webkit-backdrop-filter: blur(15px);
-  border: 1px solid rgba(139, 0, 0, 0.3);
-  border-radius: 8px;
+  background-color: var(--bg-panel);
+  /* #1A1A1E */
+  border: 1px solid #222228;
+  border-radius: 4px;
   overflow: hidden;
   box-shadow:
-    0 0 2px rgba(139, 0, 0, 0.2),
-    0 4px 20px rgba(0, 0, 0, 0.5),
-    0 10px 40px rgba(0, 0, 0, 0.3);
-  transition:
-    transform 0.3s ease,
-    box-shadow 0.3s ease;
+    -5px -5px 20px rgba(255, 255, 255, 0.01),
+    20px 40px 80px rgba(0, 0, 0, 0.9);
+  transition: transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
   will-change: transform;
 }
 

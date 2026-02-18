@@ -1,17 +1,17 @@
 /* Enhanced Cinematic Countdown Timer - Murder Mystery Theme */
 @import url('https://fonts.googleapis.com/css2?family=Creepster&family=Nosifer&family=Special+Elite&family=Courier+Prime:wght@700&display=swap');
 
-/* ===== MAIN CONTAINER ===== */
+/* ===== MAIN CONTAINER (V2.6 Noir) ===== */
 .enhanced-countdown-wrapper {
   position: relative;
   width: 100%;
-  min-height: 650px;
-  background: linear-gradient(180deg, #0a0a0a 0%, #000000 40%, #0d0505 100%);
+  min-height: 500px;
+  background-color: var(--bg-base);
   overflow: hidden;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 80px 20px;
+  padding: 100px 20px;
 }
 
 /* Vignette overlay */
@@ -44,16 +44,57 @@
 }
 
 @keyframes cameraShake {
-  0%, 100% { transform: translate(0, 0) rotate(0deg); filter: blur(0); }
-  10% { transform: translate(-2px, -1px) rotate(-0.2deg); filter: blur(0.3px); }
-  20% { transform: translate(2px, 1px) rotate(0.2deg); filter: blur(0); }
-  30% { transform: translate(-2px, 1px) rotate(0deg); filter: blur(0.3px); }
-  40% { transform: translate(2px, -1px) rotate(0.2deg); filter: blur(0); }
-  50% { transform: translate(-1px, 1px) rotate(-0.2deg); filter: blur(0.3px); }
-  60% { transform: translate(1px, -1px) rotate(0deg); filter: blur(0); }
-  70% { transform: translate(-1px, -1px) rotate(0.2deg); filter: blur(0.3px); }
-  80% { transform: translate(1px, 1px) rotate(-0.2deg); filter: blur(0); }
-  90% { transform: translate(-1px, 1px) rotate(0deg); filter: blur(0.3px); }
+
+  0%,
+  100% {
+    transform: translate(0, 0) rotate(0deg);
+    filter: blur(0);
+  }
+
+  10% {
+    transform: translate(-2px, -1px) rotate(-0.2deg);
+    filter: blur(0.3px);
+  }
+
+  20% {
+    transform: translate(2px, 1px) rotate(0.2deg);
+    filter: blur(0);
+  }
+
+  30% {
+    transform: translate(-2px, 1px) rotate(0deg);
+    filter: blur(0.3px);
+  }
+
+  40% {
+    transform: translate(2px, -1px) rotate(0.2deg);
+    filter: blur(0);
+  }
+
+  50% {
+    transform: translate(-1px, 1px) rotate(-0.2deg);
+    filter: blur(0.3px);
+  }
+
+  60% {
+    transform: translate(1px, -1px) rotate(0deg);
+    filter: blur(0);
+  }
+
+  70% {
+    transform: translate(-1px, -1px) rotate(0.2deg);
+    filter: blur(0.3px);
+  }
+
+  80% {
+    transform: translate(1px, 1px) rotate(-0.2deg);
+    filter: blur(0);
+  }
+
+  90% {
+    transform: translate(-1px, 1px) rotate(0deg);
+    filter: blur(0.3px);
+  }
 }
 
 /* ===== FOG/MIST LAYERS ===== */
@@ -93,11 +134,25 @@
 }
 
 @keyframes fogDrift {
-  0% { transform: translateX(0) translateY(0) scale(1); }
-  25% { transform: translateX(10%) translateY(5%) scale(1.05); }
-  50% { transform: translateX(5%) translateY(10%) scale(1.08); }
-  75% { transform: translateX(-5%) translateY(6%) scale(1.03); }
-  100% { transform: translateX(0) translateY(0) scale(1); }
+  0% {
+    transform: translateX(0) translateY(0) scale(1);
+  }
+
+  25% {
+    transform: translateX(10%) translateY(5%) scale(1.05);
+  }
+
+  50% {
+    transform: translateX(5%) translateY(10%) scale(1.08);
+  }
+
+  75% {
+    transform: translateX(-5%) translateY(6%) scale(1.03);
+  }
+
+  100% {
+    transform: translateX(0) translateY(0) scale(1);
+  }
 }
 
 /* ===== SHADOWY SHAPES ===== */
@@ -138,13 +193,27 @@
 }
 
 @keyframes shadowPulse {
-  0%, 100% { opacity: 0.2; }
-  50% { opacity: 0.3; }
+
+  0%,
+  100% {
+    opacity: 0.2;
+  }
+
+  50% {
+    opacity: 0.3;
+  }
 }
 
 @keyframes shadowDrift {
-  0%, 100% { transform: translateY(-50%) translateX(0); }
-  50% { transform: translateY(-50%) translateX(40px); }
+
+  0%,
+  100% {
+    transform: translateY(-50%) translateX(0);
+  }
+
+  50% {
+    transform: translateY(-50%) translateX(40px);
+  }
 }
 
 /* ===== DRIFTING ASHES/PARTICLES ===== */
@@ -183,12 +252,15 @@
     transform: translateY(0) translateX(0) rotate(0deg) scale(1);
     opacity: 0;
   }
+
   15% {
     opacity: 0.8;
   }
+
   85% {
     opacity: 0.2;
   }
+
   100% {
     transform: translateY(-700px) translateX(40px) rotate(720deg) scale(0.3);
     opacity: 0;
@@ -212,8 +284,17 @@
 }
 
 @keyframes sparkFloat {
-  0%, 100% { opacity: 0; transform: translateY(0) scale(0); }
-  50% { opacity: 1; transform: translateY(-20px) scale(1); }
+
+  0%,
+  100% {
+    opacity: 0;
+    transform: translateY(0) scale(0);
+  }
+
+  50% {
+    opacity: 1;
+    transform: translateY(-20px) scale(1);
+  }
 }
 
 /* ===== LENS FLARES ===== */
@@ -239,8 +320,17 @@
 }
 
 @keyframes lensFlarePulse {
-  0%, 100% { opacity: 0.3; transform: scale(1) rotate(0deg); }
-  50% { opacity: 0.6; transform: scale(1.2) rotate(10deg); }
+
+  0%,
+  100% {
+    opacity: 0.3;
+    transform: scale(1) rotate(0deg);
+  }
+
+  50% {
+    opacity: 0.6;
+    transform: scale(1.2) rotate(10deg);
+  }
 }
 
 /* ===== MURDER CLUE ICONS ===== */
@@ -258,16 +348,59 @@
   animation: clueFloat 12s ease-in-out infinite;
 }
 
-.clue-icon.fingerprint { top: 12%; left: 8%; transform: rotate(-20deg); }
-.clue-icon.fingerprint-2 { top: 55%; right: 10%; transform: rotate(25deg); animation-delay: -5s; }
-.clue-icon.magnifier { top: 25%; right: 15%; transform: rotate(15deg); animation-delay: -3s; }
-.clue-icon.blood { bottom: 25%; left: 12%; transform: rotate(-30deg); animation-delay: -7s; }
-.clue-icon.knife { bottom: 35%; right: 18%; transform: rotate(45deg); animation-delay: -2s; }
-.clue-icon.skull { top: 40%; left: 5%; transform: rotate(-10deg); animation-delay: -9s; }
+.clue-icon.fingerprint {
+  top: 12%;
+  left: 8%;
+  transform: rotate(-20deg);
+}
+
+.clue-icon.fingerprint-2 {
+  top: 55%;
+  right: 10%;
+  transform: rotate(25deg);
+  animation-delay: -5s;
+}
+
+.clue-icon.magnifier {
+  top: 25%;
+  right: 15%;
+  transform: rotate(15deg);
+  animation-delay: -3s;
+}
+
+.clue-icon.blood {
+  bottom: 25%;
+  left: 12%;
+  transform: rotate(-30deg);
+  animation-delay: -7s;
+}
+
+.clue-icon.knife {
+  bottom: 35%;
+  right: 18%;
+  transform: rotate(45deg);
+  animation-delay: -2s;
+}
+
+.clue-icon.skull {
+  top: 40%;
+  left: 5%;
+  transform: rotate(-10deg);
+  animation-delay: -9s;
+}
 
 @keyframes clueFloat {
-  0%, 100% { opacity: 0.06; transform: rotate(var(--rotation, 0deg)) translateY(0); }
-  50% { opacity: 0.1; transform: rotate(calc(var(--rotation, 0deg) + 5deg)) translateY(-10px); }
+
+  0%,
+  100% {
+    opacity: 0.06;
+    transform: rotate(var(--rotation, 0deg)) translateY(0);
+  }
+
+  50% {
+    opacity: 0.1;
+    transform: rotate(calc(var(--rotation, 0deg) + 5deg)) translateY(-10px);
+  }
 }
 
 /* ===== MAIN CONTENT ===== */
@@ -289,11 +422,13 @@
     transform: translateY(30px) scale(0.95);
     filter: blur(10px);
   }
+
   60% {
     opacity: 1;
     transform: translateY(-5px) scale(1.02);
     filter: blur(1px);
   }
+
   100% {
     opacity: 1;
     transform: translateY(0) scale(1);
@@ -307,16 +442,14 @@
 }
 
 .countdown-title {
-  font-family: 'Nosifer', cursive;
-  font-size: clamp(20px, 5vw, 36px);
-  letter-spacing: 8px;
-  color: #8b0000;
-  text-shadow: 
-    0 0 10px rgba(139, 0, 0, 0.9),
-    0 0 20px rgba(139, 0, 0, 0.7),
-    0 0 40px rgba(139, 0, 0, 0.5),
-    0 0 60px rgba(139, 0, 0, 0.3);
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  font-weight: 900;
+  letter-spacing: 0.3em;
+  color: var(--text-header);
+  text-transform: uppercase;
   margin-bottom: 20px;
+  text-shadow: 0 4px 15px rgba(0, 0, 0, 0.8);
 }
 
 .countdown-divider {
@@ -362,76 +495,44 @@
   align-items: flex-start;
 }
 
-/* Separator with flicker effect */
+/* Separator (Noir Refinement) */
 .countdown-separator {
-  font-family: 'Nosifer', cursive;
+  font-family: var(--font-display);
   font-size: clamp(36px, 7vw, 72px);
-  color: #dc143c;
-  text-shadow: 
-    0 0 15px rgba(220, 20, 60, 1),
-    0 0 30px rgba(220, 20, 60, 0.7),
-    0 0 45px rgba(220, 20, 60, 0.4),
-    0 0 60px rgba(220, 20, 60, 0.2);
-  animation: separatorFlicker 2.5s ease-in-out infinite;
+  color: var(--color-blood-accent);
+  opacity: 0.3;
   margin: 0 clamp(6px, 1.5vw, 18px);
   align-self: flex-start;
-  padding-top: 15px;
+  padding-top: 5px;
 }
 
-/* Digit box container - wraps digit card and label in styled box */
+/* Digit box container (Noir Tactile Equipment) */
 .digit-box-container {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
-  padding: 12px 8px 16px;
-  background: linear-gradient(180deg, rgba(20, 15, 15, 0.8) 0%, rgba(10, 8, 8, 0.9) 100%);
-  border: 1px solid rgba(139, 0, 0, 0.4);
-  border-radius: 12px;
-  box-shadow: 
-    0 4px 20px rgba(0, 0, 0, 0.6),
-    0 0 30px rgba(139, 0, 0, 0.15),
-    inset 0 1px 0 rgba(255, 255, 255, 0.03);
+  padding: 16px;
+  background: #111115;
+  border: 1px solid #222228;
+  box-shadow: 10px 15px 35px rgba(0, 0, 0, 0.8);
 }
 
-/* Subtle inner glow on box container */
-.digit-box-container::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  border-radius: 11px;
-  border: 1px solid rgba(255, 215, 0, 0.08);
-  pointer-events: none;
-}
-
-@keyframes separatorFlicker {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.92; }
-  52% { opacity: 1; }
-  54% { opacity: 0.85; }
-  56% { opacity: 1; }
-  92% { opacity: 1; }
-  94% { opacity: 0.8; }
-  96% { opacity: 1; }
-}
-
-/* Digit card container */
+/* Digit card (Charcoal Paper) */
 .digit-card {
   position: relative;
   width: clamp(70px, 14vw, 110px);
   height: clamp(90px, 18vw, 140px);
-  background: linear-gradient(180deg, #1a1a1a 0%, #0a0a0a 100%);
-  border: 1px solid rgba(139, 0, 0, 0.6);
-  border-radius: 10px;
+  background-color: var(--bg-panel);
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   overflow: hidden;
-  box-shadow: 
-    0 0 25px rgba(139, 0, 0, 0.4),
-    0 0 50px rgba(139, 0, 0, 0.15),
-    inset 0 0 40px rgba(0, 0, 0, 0.6);
+  box-shadow:
+    inset -2px -2px 10px rgba(255, 255, 255, 0.01),
+    inset 2px 2px 5px rgba(0, 0, 0, 0.5);
+  border: 1px solid #222222;
 }
 
 /* Golden edge accent */
@@ -479,22 +580,24 @@
 }
 
 @keyframes glowPulse {
-  0%, 100% { opacity: 0.5; }
-  50% { opacity: 0.85; }
+
+  0%,
+  100% {
+    opacity: 0.5;
+  }
+
+  50% {
+    opacity: 0.85;
+  }
 }
 
 /* The digit value */
 .digit-value {
-  font-family: 'Creepster', cursive;
+  font-family: var(--font-display);
+  font-weight: 900;
   font-size: clamp(42px, 10vw, 80px);
-  color: #e8e8e8;
-  text-shadow: 
-    0 0 8px rgba(255, 255, 255, 0.2),
-    0 0 16px rgba(220, 20, 60, 0.9),
-    0 0 24px rgba(220, 20, 60, 0.6),
-    0 0 36px rgba(220, 20, 60, 0.4),
-    0 0 48px rgba(139, 0, 0, 0.3),
-    3px 3px 0 #0a0a0a;
+  color: var(--text-header);
+  text-shadow: 0 4px 10px rgba(0, 0, 0, 0.8);
   letter-spacing: 3px;
   position: relative;
   z-index: 2;
@@ -512,11 +615,13 @@
     transform: translateY(-20px) scale(1.2);
     filter: blur(10px);
   }
+
   40% {
     opacity: 1;
     transform: translateY(5px) scale(0.95);
     filter: blur(2px);
   }
+
   100% {
     opacity: 1;
     transform: translateY(0) scale(1);
@@ -530,20 +635,24 @@
     opacity: 0;
     filter: blur(15px);
   }
+
   25% {
     transform: skewX(15deg) translateX(15px) scale(1.1);
     opacity: 0.7;
     filter: blur(5px);
   }
+
   50% {
     transform: skewX(-8deg) translateX(-8px) scale(1.02);
     opacity: 1;
     filter: blur(2px);
   }
+
   75% {
     transform: skewX(4deg) translateX(4px) scale(0.99);
     filter: blur(0.5px);
   }
+
   100% {
     transform: skewX(0) translateX(0) scale(1);
     opacity: 1;
@@ -557,28 +666,33 @@
 }
 
 @keyframes glitchEffect {
-  0% { 
-    transform: translate(0); 
+  0% {
+    transform: translate(0);
     filter: hue-rotate(0deg) blur(0);
   }
-  20% { 
-    transform: translate(-3px, 2px); 
+
+  20% {
+    transform: translate(-3px, 2px);
     filter: hue-rotate(60deg) saturate(1.5) blur(1px);
   }
-  40% { 
-    transform: translate(3px, -2px); 
+
+  40% {
+    transform: translate(3px, -2px);
     filter: hue-rotate(-60deg) saturate(1.5) blur(1px);
   }
-  60% { 
-    transform: translate(-2px, -1px); 
+
+  60% {
+    transform: translate(-2px, -1px);
     filter: hue-rotate(90deg) blur(0.5px);
   }
-  80% { 
-    transform: translate(2px, 1px); 
+
+  80% {
+    transform: translate(2px, 1px);
     filter: hue-rotate(-90deg) blur(0.5px);
   }
-  100% { 
-    transform: translate(0); 
+
+  100% {
+    transform: translate(0);
     filter: hue-rotate(0deg) blur(0);
   }
 }
@@ -589,10 +703,27 @@
 }
 
 @keyframes digitFlicker {
-  0%, 100% { opacity: 1; transform: scale(1); }
-  25% { opacity: 0.8; transform: scale(0.98); }
-  50% { opacity: 0.9; transform: scale(1.02); }
-  75% { opacity: 0.75; transform: scale(0.99); }
+
+  0%,
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  25% {
+    opacity: 0.8;
+    transform: scale(0.98);
+  }
+
+  50% {
+    opacity: 0.9;
+    transform: scale(1.02);
+  }
+
+  75% {
+    opacity: 0.75;
+    transform: scale(0.99);
+  }
 }
 
 /* Digit label */
@@ -637,17 +768,31 @@
 }
 
 @keyframes impactFlashSequence {
-  0% { background: #fff; }
-  15% { background: #dc143c; }
-  30% { background: #8b0000; }
-  60% { background: #1a0505; }
-  100% { background: #000; }
+  0% {
+    background: #fff;
+  }
+
+  15% {
+    background: #dc143c;
+  }
+
+  30% {
+    background: #8b0000;
+  }
+
+  60% {
+    background: #1a0505;
+  }
+
+  100% {
+    background: #000;
+  }
 }
 
 .impact-blood-splash {
   position: absolute;
   inset: 0;
-  background: 
+  background:
     radial-gradient(circle at 20% 30%, rgba(139, 0, 0, 1) 0%, transparent 35%),
     radial-gradient(circle at 80% 70%, rgba(139, 0, 0, 0.9) 0%, transparent 30%),
     radial-gradient(circle at 50% 50%, rgba(220, 20, 60, 0.8) 0%, transparent 40%),
@@ -662,9 +807,11 @@
     transform: scale(0);
     opacity: 0;
   }
+
   25% {
     opacity: 1;
   }
+
   100% {
     transform: scale(1.8);
     opacity: 0.5;
@@ -677,7 +824,7 @@
   font-family: 'Creepster', cursive;
   font-size: clamp(28px, 8vw, 64px);
   color: #dc143c;
-  text-shadow: 
+  text-shadow:
     0 0 20px rgba(220, 20, 60, 1),
     0 0 40px rgba(220, 20, 60, 0.8),
     0 0 60px rgba(220, 20, 60, 0.5);
@@ -692,14 +839,17 @@
     transform: scale(0.3);
     filter: blur(30px);
   }
+
   60% {
     opacity: 1;
     transform: scale(1.1);
     filter: blur(0);
   }
+
   80% {
     transform: scale(0.95);
   }
+
   100% {
     opacity: 1;
     transform: scale(1);
@@ -726,15 +876,15 @@
     min-height: 550px;
     padding: 60px 15px;
   }
-  
+
   .countdown-divider-line {
     width: 70px;
   }
-  
+
   .countdown-timer-display {
     gap: 8px;
   }
-  
+
   .clue-icon {
     font-size: 20px;
   }
@@ -745,20 +895,20 @@
     min-height: 500px;
     padding: 50px 10px;
   }
-  
+
   .countdown-title {
     letter-spacing: 4px;
   }
-  
+
   .countdown-separator {
     font-size: 28px;
     margin: 0 6px;
   }
-  
+
   .countdown-divider-line {
     width: 50px;
   }
-  
+
   .countdown-divider {
     gap: 15px;
   }
