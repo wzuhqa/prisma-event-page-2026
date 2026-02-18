@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Routes, Route, useLocation, HashRouter } from 'react-router-dom'
+import { HashRouter, Routes, Route, useLocation } from 'react-router-dom'
 import { useState, useEffect, useCallback, useRef, lazy, Suspense } from 'react'
 import CinematicIntro from './components/cinematic/CinematicIntro'
 import SlashNavbar from './components/common/SlashNavbar'
@@ -99,9 +99,13 @@ const AppContent = () => {
 import ErrorBoundary from './components/ErrorBoundary'
 
 function App() {
+  useEffect(() => {
+    console.log("PRISMA APP V1.1 - HASHROUTER ACTIVE");
+  }, []);
+
   return (
     <ErrorBoundary>
-      <HashRouter basename="/prisma-event-page">
+      <HashRouter>
         <NavigationProvider>
           <AppContent />
         </NavigationProvider>
