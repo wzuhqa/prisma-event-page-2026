@@ -39,6 +39,10 @@ const EvidenceBoard = () => {
     const containerRef = useRef(null)
     const overlayRef = useRef(null)
 
+    useEffect(() => {
+        console.log(`EVIDENCE BOARD LOADED: ${SPONSORS_DATA.length} SUSPECTS ACTIVE`);
+    }, []);
+
     // Flashlight Effect
     const handleMouseMove = (e) => {
         if (!containerRef.current) return
