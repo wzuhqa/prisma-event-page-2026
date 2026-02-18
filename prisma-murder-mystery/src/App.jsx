@@ -66,6 +66,13 @@ const AppContent = () => {
       {/* Global Particle System */}
       <GlobalParticles enabled={false} intensity="medium" />
 
+      {/* Global Ambient Effects (Grain, Scanlines, Flicker) */}
+      <div className="global-ambient-overlay">
+        <div className="global-grain"></div>
+        <div className="global-scanlines"></div>
+        <div className="global-vignette"></div>
+      </div>
+
       {/* Navigation */}
       <SlashNavbar />
 

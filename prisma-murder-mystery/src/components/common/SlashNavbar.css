@@ -559,6 +559,58 @@
   opacity: 0.8;
 }
 
+/* ----- Status Indicators ----- */
+.navbar-status {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  margin-left: auto;
+  margin-right: 3rem;
+  font-family: 'Courier New', monospace;
+  font-size: 0.6rem;
+  letter-spacing: 0.2em;
+  font-weight: 700;
+  opacity: 0.8;
+}
+
+.status-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.status-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background-color: currentColor;
+  box-shadow: 0 0 5px currentColor;
+}
+
+.status-dot--gold {
+  color: #c8a96e;
+}
+
+.status-text--gold {
+  color: #c8a96e;
+}
+
+.status-text--red {
+  color: #c41e3a;
+  text-shadow: 0 0 5px rgba(196, 30, 58, 0.5);
+}
+
+.status-label {
+  color: #666;
+  margin-right: 0.5rem;
+}
+
+@media (max-width: 900px) {
+  .navbar-status {
+    display: none;
+  }
+}
+
 /* ----- Navigation Menu ----- */
 .navbar-menu {
   display: flex;
@@ -578,175 +630,133 @@
    With metallic shimmer and katana effects
    ============================================ */
 
+/* ============================================
+   NAV LINK STYLES - KATANA REVEAL
+   Blade cut effect with split text
+   ============================================ */
+
 .navbar-link {
   background: none;
   border: none;
   padding: 12px 20px;
   font-family: 'Inter', 'Segoe UI', sans-serif;
   font-size: 14px;
-  font-weight: 500;
-  color: var(--sl-text-light);
+  font-weight: 600;
+  color: transparent;
+  /* Text is transparent, pseudo-elements show the text */
   letter-spacing: 2px;
   text-transform: uppercase;
   cursor: pointer;
   position: relative;
   outline: none;
   overflow: visible;
-  transition:
-    color 0.3s ease,
-    transform 0.2s ease,
-    text-shadow 0.3s ease;
-}
-
-/* Link text wrapper */
-.link-text {
-  position: relative;
-  z-index: 2;
-}
-
-/* Shimmer effect removed (intentionally) */
-
-/* ----- Hover Effects ----- */
-.navbar-link:hover {
-  color: var(--sl-text-bright);
-  transform: skewX(-5deg) scale(1.02);
-  text-shadow:
-    0 0 10px rgba(196, 30, 58, 0.3),
-    0 0 20px rgba(196, 30, 58, 0.2);
-}
-
-.navbar-link:focus-visible {
-  color: var(--sl-primary-red);
-  outline: 2px solid rgba(196, 30, 58, 0.5);
-  outline-offset: 4px;
-  border-radius: 2px;
-}
-
-/* ----- Spark Particles ----- */
-.spark-particle {
-  position: absolute;
-  width: 3px;
-  height: 3px;
-  background: radial-gradient(circle,
-      #fff 0%,
-      rgba(255, 255, 255, 0.8) 30%,
-      rgba(196, 30, 58, 0.8) 70%,
-      transparent 100%);
-  border-radius: 50%;
-  pointer-events: none;
-  z-index: 3;
-  animation: sparkFly 0.4s ease-out forwards;
-}
-
-@keyframes sparkFly {
-  0% {
-    opacity: 1;
-    transform: translate(0, 0) scale(1);
-  }
-
-  50% {
-    opacity: 1;
-  }
-
-  100% {
-    opacity: 0;
-    transform: translate(var(--spark-x, 20px), var(--spark-y, -20px)) scale(0);
-  }
-}
-
-/* Generate random spark directions */
-.navbar-link--hovered .spark-particle:nth-child(1) {
-  --spark-x: 15px;
-  --spark-y: -25px;
-}
-
-.navbar-link--hovered .spark-particle:nth-child(2) {
-  --spark-x: -20px;
-  --spark-y: -15px;
-}
-
-.navbar-link--hovered .spark-particle:nth-child(3) {
-  --spark-x: 25px;
-  --spark-y: 10px;
-}
-
-.navbar-link--hovered .spark-particle:nth-child(4) {
-  --spark-x: -15px;
-  --spark-y: 20px;
-}
-
-.navbar-link--hovered .spark-particle:nth-child(5) {
-  --spark-x: 10px;
-  --spark-y: -30px;
-}
-
-.navbar-link--hovered .spark-particle:nth-child(6) {
-  --spark-x: -25px;
-  --spark-y: -5px;
-}
-
-/* ----- Katana Underline ----- */
-.katana-underline {
-  position: absolute;
-  bottom: 8px;
-  left: 50%;
-  transform: translateX(-50%) scaleX(0);
-  width: 30px;
-  height: 2px;
-  background: linear-gradient(90deg,
-      transparent 0%,
-      rgba(196, 30, 58, 0.5) 20%,
-      #c41e3a 50%,
-      rgba(196, 30, 58, 0.5) 80%,
-      transparent 100%);
-  transform-origin: center;
   transition: transform 0.2s ease;
 }
 
-.navbar-link:hover .katana-underline,
-.navbar-link--hovered .katana-underline {
-  transform: translateX(-50%) scaleX(1);
-  box-shadow:
-    0 0 10px #c41e3a,
-    0 0 20px rgba(196, 30, 58, 0.5);
+/* Base text visibility for accessibility but hidden visually */
+.link-text {
+  visibility: hidden;
 }
 
-/* ----- Active State ----- */
-.navbar-link--active {
+/* Pseudo-elements for Split Text */
+.link-text::before,
+.link-text::after {
+  content: attr(data-text);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  color: var(--sl-text-light);
+  visibility: visible;
+  transition:
+    transform 0.2s cubic-bezier(0.19, 1, 0.22, 1),
+    color 0.2s ease,
+    text-shadow 0.2s ease;
+}
+
+/* Top Half */
+.link-text::before {
+  clip-path: polygon(0 0, 100% 0, 100% 50%, 0 50%);
+  transform-origin: bottom center;
+}
+
+/* Bottom Half */
+.link-text::after {
+  clip-path: polygon(0 50%, 100% 50%, 100% 100%, 0 100%);
+  transform-origin: top center;
+}
+
+/* Hover State - Split */
+.navbar-link:hover .link-text::before {
+  transform: translate(-2px, -2px) skewX(-10deg);
   color: var(--sl-white);
-  text-shadow:
-    0 0 10px rgba(196, 30, 58, 0.5),
-    0 0 20px rgba(196, 30, 58, 0.3);
+  text-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
 }
 
-.navbar-link--active::after {
+.navbar-link:hover .link-text::after {
+  transform: translate(2px, 2px) skewX(-10deg);
+  color: var(--sl-white);
+  text-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
+}
+
+/* Active State */
+.navbar-link--active .link-text::before,
+.navbar-link--active .link-text::after {
+  color: var(--sl-primary-red);
+  text-shadow: 0 0 10px rgba(196, 30, 58, 0.6);
+}
+
+/* Diagonal Slash Line */
+.navbar-link::before {
   content: '';
   position: absolute;
-  bottom: 8px;
+  top: 50%;
   left: 50%;
-  transform: translateX(-50%);
-  width: 30px;
+  width: 120%;
   height: 2px;
-  background: #c41e3a;
-  box-shadow:
-    0 0 10px #c41e3a,
-    0 0 20px rgba(196, 30, 58, 0.5);
-  animation: underlineGlow 2s ease-in-out infinite;
+  background: var(--sl-primary-red);
+  transform: translate(-50%, -50%) rotate(-25deg) scaleX(0);
+  transform-origin: center;
+  transition: transform 0.2s cubic-bezier(0.23, 1, 0.32, 1);
+  box-shadow: 0 0 8px var(--sl-primary-red);
+  z-index: 10;
+  pointer-events: none;
 }
 
-@keyframes underlineGlow {
+.navbar-link:hover::before {
+  transform: translate(-50%, -50%) rotate(-25deg) scaleX(1);
+  transition-duration: 0.1s;
+}
 
-  0%,
-  100% {
-    box-shadow:
-      0 0 10px #c41e3a,
-      0 0 20px rgba(196, 30, 58, 0.5);
+/* Glitch Shake on Hover */
+.navbar-link:hover {
+  animation: glitchShake 0.4s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
+}
+
+@keyframes glitchShake {
+  0% {
+    transform: translate(0, 0);
   }
 
-  50% {
-    box-shadow:
-      0 0 15px #c41e3a,
-      0 0 30px rgba(196, 30, 58, 0.7);
+  20% {
+    transform: translate(-1px, 1px);
+  }
+
+  40% {
+    transform: translate(1px, -1px);
+  }
+
+  60% {
+    transform: translate(-1px, 0);
+  }
+
+  80% {
+    transform: translate(1px, 0);
+  }
+
+  100% {
+    transform: translate(0, 0);
   }
 }
 

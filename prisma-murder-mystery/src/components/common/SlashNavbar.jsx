@@ -228,7 +228,7 @@ const NavItem = ({ item, isActive, isLocked, onClick, onHover, isHovered, onNavC
           <div className="blood-drop" style={{ left: '80%', animationDelay: '0.4s' }}></div>
         </div>
         <span className="shards-container">{particleElements}</span>
-        <span className="link-text">{item.label}</span>
+        <span className="link-text" data-text={item.label}>{item.label}</span>
       </button>
     </li>
   )
@@ -365,6 +365,18 @@ const SlashNavbar = ({ ambientGlow = true, isLocked = false }) => {
           <span className="hamburger-line"></span>
           <span className="hamburger-line"></span>
         </button>
+
+        {/* Status indicators */}
+        <div className="navbar-status">
+          <div className="status-item">
+            <span className="status-dot status-dot--gold"></span>
+            <span className="status-text status-text--gold">SESSION VERIFIED</span>
+          </div>
+          <div className="status-item">
+            <span className="status-label">CLEARANCE:</span>
+            <span className="status-text status-text--red">RESTRICTED</span>
+          </div>
+        </div>
 
         <ul className={`navbar-menu ${isMobileMenuOpen ? 'navbar-menu--open' : ''}`} role="menubar">
           {NAV_ITEMS.map((item) => (

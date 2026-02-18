@@ -1,115 +1,193 @@
-import { memo, useEffect, useLayoutEffect, useRef, useState } from 'react'
+import { memo, useLayoutEffect, useRef } from 'react'
+import { Link } from 'react-router-dom'
 import gsap from 'gsap'
-import CinematicGlitchHero from '../home/CinematicGlitchHero'
 import styles from './HeroSection.module.css'
-import InvocationLayer from './InvocationLayer'
-import TemporalSealLayer from './TemporalSealLayer'
-import EntryDecisionLayer from './EntryDecisionLayer'
 
 const HeroSection = memo(function HeroSection() {
-  const rootRef = useRef(null)
-  const invocationRef = useRef(null)
-  const temporalRef = useRef(null)
-  const entryRef = useRef(null)
-  const riteRef = useRef(null)
+  const cardRef = useRef(null)
 
-  const [showRiteAwaits, setShowRiteAwaits] = useState(false)
-
-  // Slow fade-in stagger using transform + opacity only
   useLayoutEffect(() => {
-    if (!rootRef.current) return
+    if (!cardRef.current) return
+    const prefersReduced = window.matchMedia?.('(prefers-reduced-motion: reduce)')?.matches
+    if (prefersReduced) return
 
     const ctx = gsap.context(() => {
-      const targets = [invocationRef.current, temporalRef.current, entryRef.current].filter(Boolean)
+      gsap.fromTo(
+        cardRef.current,
+        { opacity: 0, y: 32, scale: 0.97 },
+        { opacity: 1, y: 0, scale: 1, duration: 1.1, ease: 'power3.out', delay: 0.2 }
+      )
+    }, cardRef)
 
-      const prefersReduced = window.matchMedia?.('(prefers-reduced-motion: reduce)')?.matches
-      if (prefersReduced) {
-        gsap.set(targets, { opacity: 1, y: 0 })
-        return
+    // Scroll Trigger Logic
+    const handleScroll = () => {
+      if (!cardRef.current) return
+      const scrollY = window.scrollY
+      const windowHeight = window.innerHeight
+
+      // Calculate opacity/scale based on scroll
+      const fadeStart = 0
+      const fadeEnd = windowHeight * 0.5
+
+      let progress = (scrollY - fadeStart) / (fadeEnd - fadeStart)
+      progress = Math.max(0, Math.min(1, progress)) // Clamp 0-1
+
+      // Fade OUT Card: 1 -> 0
+      const cardOpacity = 1 - progress
+      const cardScale = 1 - (progress * 0.05)
+
+      // Fade IN Strings: 0.2 -> 1 (accentuate them)
+      const stringOpacity = 0.2 + (progress * 0.8)
+      const stringScale = 1 + (progress * 0.1)
+
+      // Apply transforms
+      cardRef.current.style.opacity = cardOpacity
+      cardRef.current.style.transform = `scale(${cardScale})`
+
+      const strings = document.querySelector(`.${styles.redStrings}`)
+      if (strings) {
+        strings.style.opacity = stringOpacity
+        strings.style.transform = `scale(${stringScale})`
       }
+    }
 
-      gsap.set(targets, { opacity: 0, y: 14 })
-      gsap.to(targets, {
-        opacity: 1,
-        y: 0,
-        duration: 0.9,
-        ease: 'power2.out',
-        stagger: 0.15,
-        delay: 0.15,
-      })
-    }, rootRef)
+    window.addEventListener('scroll', handleScroll, { passive: true })
 
-    return () => ctx.revert()
+    return () => {
+      ctx.revert()
+      window.removeEventListener('scroll', handleScroll)
+    }
   }, [])
 
-  // Optional atmospheric detail: show after 15s idle (mount idle)
-  useEffect(() => {
-    const t = window.setTimeout(() => setShowRiteAwaits(true), 15000)
-    return () => window.clearTimeout(t)
-  }, [])
-
-  useLayoutEffect(() => {
-    if (!showRiteAwaits || !riteRef.current) return
-    const tween = gsap.fromTo(
-      riteRef.current,
-      { opacity: 0, y: 8 },
-      { opacity: 1, y: 0, duration: 0.8, ease: 'power2.out' }
-    )
-    return () => tween.kill()
-  }, [showRiteAwaits])
+  const scrollToNext = () => {
+    window.scrollTo({ top: window.innerHeight, behavior: 'smooth' })
+  }
 
   return (
     <section
-      ref={rootRef}
-      className={[
-        styles.heroRoot,
-        'relative overflow-hidden bg-[#0A0A0B] text-[#D8D3C4]',
-        'min-h-screen flex items-center justify-center',
-      ].join(' ')}
-      aria-label="Prisma hero"
+      className={styles.heroRoot}
+      aria-label="Prisma Festival Hero"
     >
-      <div className={styles.sigil} aria-hidden="true" />
+      {/* Background: CONFIDENTIAL watermarks */}
+      <div className={styles.watermarkLeft} aria-hidden="true">CONFIDENTIAL</div>
+      <div className={styles.watermarkRight} aria-hidden="true">CONFIDENTIAL</div>
 
-      <div className={[styles.content, 'w-full'].join(' ')}>
-        <div className="mx-auto w-full max-w-6xl px-6 sm:px-10 py-24 sm:py-28 lg:py-32">
-          <header className="text-center">
-            {/* Title stays as-is; refactor targets content below */}
-            <CinematicGlitchHero text="PRISMA" className="mx-auto" showCountdown={false} />
+      {/* Background: Red string lines */}
+      <svg className={styles.redStrings} viewBox="0 0 1000 600" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+        <path d="M50,100 L300,350 L700,200 L950,450" stroke="rgba(196,30,58,0.25)" fill="none" strokeWidth="1" />
+        <path d="M100,500 L400,250 L650,400 L900,150" stroke="rgba(196,30,58,0.18)" fill="none" strokeWidth="0.8" />
+        <path d="M200,50 L500,300 L800,100" stroke="rgba(196,30,58,0.12)" fill="none" strokeWidth="0.6" />
+      </svg>
 
-            {/* Ritual dossier divider */}
-            <div className="mx-auto mt-10 h-px w-32 bg-[#5A0E0E]/60" aria-hidden="true" />
-          </header>
+      {/* Case File Card */}
+      <div ref={cardRef} className={styles.caseCard}>
+        {/* Case File ID */}
+        <div className={styles.caseFileId}>CASE FILE: #PR-2026-X</div>
 
-          <div className="mt-10 grid gap-12 sm:gap-14">
-            <div ref={invocationRef} className={styles.willChange}>
-              <InvocationLayer />
-            </div>
-            <div ref={temporalRef} className={styles.willChange}>
-              <TemporalSealLayer />
-            </div>
-            <div ref={entryRef} className={styles.willChange}>
-              <EntryDecisionLayer />
-            </div>
+        {/* Main content row: university label + PRISMA title */}
+        <div className={styles.titleRow}>
+          <div className={styles.universityBadge}>SRM UNIVERSITY DELHI-NCR</div>
+          <h1 className={styles.prismaTitle} data-text="PRISMA">PRISMA</h1>
+        </div>
+
+        {/* Subtitle */}
+        <p className={styles.subtitle}>ANNUAL TECH &amp; CULTURAL FEST</p>
+
+        {/* Hashtag */}
+        <p className={styles.hashtag}>#TheMysteryUnfolds</p>
+
+        {/* Date */}
+        <p className={styles.date}>28 February to 1 March 2025</p>
+
+        {/* Confidential Stamp */}
+        <div className={styles.confidentialStamp}>CONFIDENTIAL</div>
+
+        {/* Evidence Tag */}
+        <div className={styles.evidenceTag}>
+          <span className={styles.tagLabel}>EVIDENCE</span>
+          <span className={styles.tagId}>#204</span>
+        </div>
+
+        {/* Case Metadata */}
+        <div className={styles.metaBlock}>
+          <div className={styles.metaRow}>
+            <span className={styles.metaLabel}>LEAD INVESTIGATOR:</span>
+            <span className={styles.metaValue}>UNKNOWN</span>
           </div>
-
-          <div className="mt-14 flex justify-center">
-            <p
-              ref={riteRef}
-              className={[
-                'font-mono text-[11px] sm:text-xs uppercase tracking-[0.42em]',
-                'text-[#D8D3C4]/45',
-                showRiteAwaits ? '' : 'opacity-0',
-              ].join(' ')}
-            >
-              The rite awaits.
-            </p>
+          <div className={styles.metaRow}>
+            <span className={styles.metaLabel}>STATUS:</span>
+            <span className={styles.metaValue}>OPEN</span>
+          </div>
+          <div className={styles.metaRow}>
+            <span className={styles.metaLabel}>THREAT LEVEL:</span>
+            <span className={styles.metaValue} style={{ color: '#c41e3a' }}>HIGH</span>
           </div>
         </div>
+
+        {/* CTA Buttons */}
+        <div className={styles.buttonGroup}>
+          <Link
+            to="/events"
+            className={`${styles.btn} ${styles.btnRed}`}
+            onClick={(e) => {
+              const btn = e.currentTarget;
+              const circle = document.createElement('span');
+              const diameter = Math.max(btn.clientWidth, btn.clientHeight);
+              const radius = diameter / 2;
+              const rect = btn.getBoundingClientRect();
+
+              circle.style.width = circle.style.height = `${diameter}px`;
+              circle.style.left = `${e.clientX - rect.left - radius}px`;
+              circle.style.top = `${e.clientY - rect.top - radius}px`;
+              circle.classList.add(styles.ripple);
+
+              const ripple = btn.getElementsByClassName(styles.ripple)[0];
+              if (ripple) {
+                ripple.remove();
+              }
+
+              btn.appendChild(circle);
+            }}
+          >
+            <span className={styles.btnIcon}>⌕</span>
+            INVESTIGATE EVENTS →
+          </Link>
+          <Link
+            to="/register"
+            className={`${styles.btn} ${styles.btnGold}`}
+            onClick={(e) => {
+              const btn = e.currentTarget;
+              const circle = document.createElement('span');
+              const diameter = Math.max(btn.clientWidth, btn.clientHeight);
+              const radius = diameter / 2;
+              const rect = btn.getBoundingClientRect();
+
+              circle.style.width = circle.style.height = `${diameter}px`;
+              circle.style.left = `${e.clientX - rect.left - radius}px`;
+              circle.style.top = `${e.clientY - rect.top - radius}px`;
+              circle.classList.add(styles.ripple);
+
+              const ripple = btn.getElementsByClassName(styles.ripple)[0];
+              if (ripple) {
+                ripple.remove();
+              }
+
+              btn.appendChild(circle);
+            }}
+          >
+            <span className={styles.btnIcon}>⇥</span>
+            GRAB YOUR PASSES
+          </Link>
+        </div>
+      </div>
+
+      {/* Scroll Indicator */}
+      <div className={styles.scrollIndicator} onClick={scrollToNext} role="button" tabIndex={0} aria-label="Scroll down">
+        <div className={styles.scrollLine} />
+        <span className={styles.scrollText}>SCROLL</span>
       </div>
     </section>
   )
 })
 
 export default HeroSection
-
-
