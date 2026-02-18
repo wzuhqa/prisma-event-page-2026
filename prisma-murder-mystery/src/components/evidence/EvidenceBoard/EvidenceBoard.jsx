@@ -7,17 +7,19 @@ import styles from './EvidenceBoard.module.css'
 gsap.registerPlugin(ScrollTrigger)
 
 const SPONSORS_DATA = [
+    { name: "3D Engineering", codename: "The Architect", note: "Built the trap.", logo: "" },
     { name: "Adobe", codename: "The Creative", note: "Altered the documents.", logo: "" },
     { name: "Balaji", codename: "The Supplier", note: "Snacks at the crime scene.", logo: "" },
     { name: "BigWig", codename: "The Wig", note: "Disguise expert.", logo: "" },
     { name: "Caterman", codename: "The Chef", note: "Poison in the food?", logo: "" },
     { name: "Clovia", codename: "The Silk", note: "Left a fabric trace.", logo: "" },
     { name: "Coolberg", codename: "Zero Proof", note: "Sober witness.", logo: "" },
+    { name: "Digiveda", codename: "The Archive", note: "Digital footprints found.", logo: "" },
     { name: "F9Kart", codename: "The Racer", note: "Getaway driver.", logo: "" },
-    { name: "3D Engineering", codename: "The Architect", note: "Built the trap.", logo: "" },
     { name: "Federal", codename: "The Bank", note: "Follow the money.", logo: "" },
     { name: "Incredible", codename: "The Myth", note: "Too good to be true.", logo: "" },
     { name: "Insight", codename: "The Eye", note: "Saw everything.", logo: "" },
+    { name: "Krafton", codename: "The Survivor", note: "Winner winner.", logo: "" },
     { name: "Mac-V", codename: "The Shade", note: "Hiding in plain sight.", logo: "" },
     { name: "Mojo", codename: "The Charm", note: "Hypnotic influence.", logo: "" },
     { name: "Panchwati", codename: "The Grove", note: "Meeting point confirmed.", logo: "" },
@@ -29,9 +31,7 @@ const SPONSORS_DATA = [
     { name: "Sipp", codename: "The Drink", note: "Spiked.", logo: "" },
     { name: "Skivia", codename: "The Skin", note: "DNA evidence found.", logo: "" },
     { name: "Svva", codename: "The Essence", note: "Lingering scent.", logo: "" },
-    { name: "Timex", codename: "The Clock", note: "Running out of time.", logo: "" },
-    { name: "Krafton", codename: "The Survivor", note: "Winner winner.", logo: "" },
-    { name: "Digiveda", codename: "The Archive", note: "Digital footprints found.", logo: "" }
+    { name: "Timex", codename: "The Clock", note: "Running out of time.", logo: "" }
 ]
 
 const EvidenceBoard = () => {
