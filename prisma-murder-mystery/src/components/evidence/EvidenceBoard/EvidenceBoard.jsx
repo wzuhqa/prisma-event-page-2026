@@ -14,6 +14,7 @@ const SPONSORS_DATA = [
     { name: "Caterman", codename: "The Chef", note: "Poison in the food?", logo: "" },
     { name: "Clovia", codename: "The Silk", note: "Left a fabric trace.", logo: "" },
     { name: "Coolberg", codename: "Zero Proof", note: "Sober witness.", logo: "" },
+    { name: "Digiveda", codename: "The Archive", note: "Digital footprints found.", logo: "" },
     { name: "F9Kart", codename: "The Racer", note: "Getaway driver.", logo: "" },
     { name: "Federal", codename: "The Bank", note: "Follow the money.", logo: "" },
     { name: "Incredible", codename: "The Myth", note: "Too good to be true.", logo: "" },
