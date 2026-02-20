@@ -92,7 +92,7 @@ function App() {
 
   return (
     <ErrorBoundary>
-      <BrowserRouter basename="/prisma-techfest">
+      <BrowserRouter basename=".">
         <ForensicCursor />
         <NavigationProvider>
           <AppContent />
