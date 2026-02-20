@@ -110,6 +110,47 @@
   }
 }
 
+/* Microfilm Specific Overlays */
+.specter-archive.microfilm-mode .scan-lines {
+  background: repeating-linear-gradient(0deg,
+      transparent,
+      transparent 1px,
+      rgba(255, 255, 255, 0.05) 1px,
+      rgba(255, 255, 255, 0.05) 2px);
+  opacity: 0.2;
+}
+
+.microfilm-jitter {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 101;
+  opacity: 0;
+}
+
+.specter-archive.microfilm-mode .microfilm-jitter {
+  opacity: 1;
+  animation: microfilmJitter 0.15s infinite;
+}
+
+@keyframes microfilmJitter {
+  0% {
+    transform: translate(0, 0);
+  }
+
+  33% {
+    transform: translate(1px, -1px);
+  }
+
+  66% {
+    transform: translate(-1px, 1px);
+  }
+
+  100% {
+    transform: translate(0, 0);
+  }
+}
+
 /* Film Grain */
 .film-grain {
   position: absolute;
@@ -282,14 +323,44 @@
   z-index: 98;
 }
 
-/* Content */
-.specter-content {
-  position: relative;
-  z-index: 10;
-  width: 100%;
-  max-width: 1400px;
-  margin: 0 auto;
-  padding: 60px 20px;
+/* Microfilm Filter */
+.specter-archive.microfilm-mode .specter-content {
+  filter: invert(0.9) contrast(1.4) sepia(0.3);
+  background: #e0e0e0;
+  /* Off-white for the "paper" of the microfilm */
+}
+
+/* Forensic Stamps */
+.forensic-stamp {
+  position: absolute;
+  padding: 5px 15px;
+  border: 3px solid #8b0000;
+  color: #8b0000;
+  font-family: 'Special Elite', monospace;
+  font-weight: 900;
+  text-transform: uppercase;
+  z-index: 102;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+}
+
+.specter-archive.microfilm-mode .forensic-stamp {
+  opacity: 0.7;
+}
+
+.stamp-restricted {
+  top: 50px;
+  left: 100px;
+  transform: rotate(-15deg);
+  font-size: 1.5rem;
+}
+
+.stamp-corrupted {
+  bottom: 100px;
+  right: 150px;
+  transform: rotate(10deg);
+  font-size: 1.2rem;
 }
 
 /* Timeline Toggle Button */
@@ -834,7 +905,7 @@
 
 .h-timeline-card {
   flex-shrink: 0;
-  width: 300px;
+  width: min(100%, 300px);
   height: 450px;
   background: rgba(10, 10, 26, 0.8);
   border: 1px solid rgba(139, 0, 0, 0.3);
@@ -855,7 +926,7 @@
 
 .h-year-display {
   font-family: 'Cinzel', serif;
-  font-size: 3rem;
+  font-size: clamp(2rem, 8vw, 3rem);
   font-weight: 700;
   color: rgba(184, 134, 11, 0.8);
   text-shadow: 0 0 20px rgba(184, 134, 11, 0.4);
@@ -916,7 +987,6 @@
   z-index: 2;
   display: block;
   -webkit-text-stroke: 2px rgba(0, 0, 0, 0.9);
-  text-stroke: 2px rgba(0, 0, 0, 0.9);
   text-shadow:
     0 0 20px rgba(184, 134, 11, 1),
     0 0 40px rgba(184, 134, 11, 0.8),
@@ -1051,7 +1121,7 @@
   }
 
   .h-timeline-card {
-    width: 250px;
+    width: min(85vw, 250px);
     height: 380px;
   }
 }

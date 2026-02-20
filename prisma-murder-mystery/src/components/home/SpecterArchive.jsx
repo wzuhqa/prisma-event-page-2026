@@ -335,7 +335,10 @@ function SpecterArchive() {
   };
 
   return (
-    <section className="specter-archive" ref={sectionRef}>
+    <section className="specter-archive microfilm-mode" ref={sectionRef}>
+      <div className="microfilm-jitter" />
+      <div className="forensic-stamp stamp-restricted">RESTRICTED ACCESS</div>
+      <div className="forensic-stamp stamp-corrupted">DATA CORRUPTED</div>
       <div className="specter-bg-gradient" />
 
       <ParallaxBackground sectionRef={sectionRef} />
@@ -362,7 +365,7 @@ function SpecterArchive() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1, delay: 0.3 }}
         >
-          <h1 className="specter-heading">
+          <h1 className="specter-heading scratched-text-heavy">
             <span className="heading-text">SUMMON THE SPECTERS</span>
             <span className="heading-sub">OF PAST PERFORMERS</span>
           </h1>

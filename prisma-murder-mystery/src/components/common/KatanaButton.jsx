@@ -23,7 +23,7 @@ const KatanaButton = ({
             onMouseEnter={() => setIsHovered(true)}
             onMouseLeave={() => setIsHovered(false)}
             className={`
-        relative group overflow-hidden px-8 py-4 
+        relative group overflow-hidden px-8 py-4 blood-hover-drip
         font-heading font-bold uppercase tracking-widest text-sm
         transition-all duration-300
         ${disabled ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'}

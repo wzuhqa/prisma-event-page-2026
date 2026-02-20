@@ -113,10 +113,10 @@ const EnhancedCountdown = ({
         setSliceDigit('seconds')
         setTimeout(() => setSliceDigit(null), 600)
 
-        if (Math.random() > 0.9) {
+        if (Math.random() > 0.4) { // Increased chance of glitching from 0.1 to 0.6
           const units = ['days', 'hours', 'minutes', 'seconds']
           setGlitchDigit(units[Math.floor(Math.random() * units.length)])
-          setTimeout(() => setGlitchDigit(null), 300)
+          setTimeout(() => setGlitchDigit(null), 150 + Math.random() * 400) // Erratic duration
         }
 
         if (totalSeconds <= 5 && totalSeconds > 0) {
@@ -192,8 +192,8 @@ const EnhancedCountdown = ({
 
       <div className={`countdown-main ${isMounted ? 'fade-in-wrapper' : 'opacity-0'}`}>
         <div className="countdown-header-section">
-          <h2 className="countdown-title">TIME REMAINING</h2>
-          <p className="countdown-subtitle">The investigation awaits...</p>
+          <h2 className="countdown-title scratched-text-heavy">TIME REMAINING</h2>
+          <p className="countdown-subtitle scratched-text">The investigation awaits...</p>
         </div>
 
         <div className="countdown-timer-display">
@@ -212,7 +212,7 @@ const EnhancedCountdown = ({
           ))}
         </div>
 
-        <div className="countdown-event-date">
+        <div className="countdown-event-date scratched-text">
           FEBRUARY 28 — MARCH 1, 2026
         </div>
       </div>

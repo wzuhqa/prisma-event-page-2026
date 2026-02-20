@@ -10,7 +10,6 @@ const CaseSummaryPanel = lazy(() => import('../components/home/CaseSummaryPanel/
 const EnhancedCountdown = lazy(() => import('../components/home/EnhancedCountdown'))
 const EventLineupReveal = lazy(() => import('../components/home/EventLineupReveal'))
 const SpecterArchive = lazy(() => import('../components/home/SpecterArchive'))
-const EvidenceBoard = lazy(() => import('../components/evidence/EvidenceBoard/EvidenceBoard'))
 
 // Loading placeholder for lazy components
 const SectionLoader = () => (
@@ -25,7 +24,7 @@ const SectionLoader = () => (
 const Home = () => {
 
   return (
-    <main className="min-h-screen relative">
+    <main className="min-h-screen relative z-20">
       {/* Global Page Connector (Fixed background drawing effect) */}
       <RedThreadConnector />
 
@@ -44,26 +43,21 @@ const Home = () => {
       </Suspense>
 
       {/* ===== ENHANCED COUNTDOWN SECTION ===== */}
-      <section className="relative">
+      <section className="relative z-20 bg-base">
         <Suspense fallback={<SectionLoader />}>
           <EnhancedCountdown targetTime="2026-02-28T00:00:00" />
         </Suspense>
       </section>
 
       {/* ===== ARTIST LINEUP SECTION ===== */}
-      <section className="relative">
+      <section className="relative z-20 bg-base">
         <Suspense fallback={<SectionLoader />}>
           <EventLineupReveal />
         </Suspense>
       </section>
 
-      {/* ===== EVIDENCE BOARD (SPONSORS) ===== */}
-      <Suspense fallback={<SectionLoader />}>
-        <EvidenceBoard />
-      </Suspense>
-
       {/* ===== SPECTER ARCHIVE SECTION ===== */}
-      <section className="relative">
+      <section className="relative z-20 bg-base">
         <Suspense fallback={<SectionLoader />}>
           <SpecterArchive />
         </Suspense>

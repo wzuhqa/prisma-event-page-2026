@@ -129,13 +129,9 @@ const EventLineupReveal = () => {
       {/* Main content container */}
       <div className="lineup-content">
         {/* Main headline */}
-        <h1 className="lineup-headline">
+        <h1 className="lineup-headline scratched-text-heavy">
           <span className="lineup-headline-main">UNAUTHORIZED PERFORMANCE</span>
           <span className="lineup-headline-sub">SCHEDULED</span>
-          {/* RGB split effect */}
-          <span className="lineup-rgb-red">UNAUTHORIZED PERFORMANCE</span>
-          <span className="lineup-rgb-green">UNAUTHORIZED PERFORMANCE</span>
-          <span className="lineup-rgb-blue">UNAUTHORIZED PERFORMANCE</span>
           {/* Glitch slices */}
           <span className="lineup-glitch-slice slice-1" />
           <span className="lineup-glitch-slice slice-2" />
@@ -313,7 +309,7 @@ const ArtistCard = ({ artist, isDecrypted, onWhisper }) => {
           </div>
 
           <div className="artist-name-wrapper">
-            <h3 className="artist-name">
+            <h3 className="artist-name scratched-text">
               {isDecrypted ? artist.realName : artist.name}
             </h3>
             <AnimatePresence>

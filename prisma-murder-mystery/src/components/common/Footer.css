@@ -107,7 +107,7 @@
     z-index: 10;
     max-width: 1200px;
     margin: 0 auto;
-    padding: 100px 40px 80px;
+    padding: var(--space-16, 4rem) clamp(1.25rem, 4vw, 2.5rem) var(--space-12, 3rem);
 }
 
 /* Pulsing Top Border */
@@ -262,7 +262,7 @@
 .footer-grid {
     display: grid;
     grid-template-columns: 1.5fr 1fr 1fr 1.2fr;
-    gap: 70px;
+    gap: var(--space-10, 2.5rem);
 }
 
 .footer-brand-text {
@@ -274,13 +274,12 @@
 
 /* Bottom Bar */
 .footer-bottom {
-    margin-top: 80px;
-    padding-top: 30px;
+    margin-top: var(--space-12, 3rem);
+    padding-top: var(--space-6, 1.5rem);
     border-top: 1px solid rgba(255, 255, 255, 0.05);
     display: flex;
     justify-content: space-between;
     align-items: flex-end;
-    /* Align to text baseline */
     font-family: 'Courier New', monospace;
     font-size: 11px;
     color: #444;

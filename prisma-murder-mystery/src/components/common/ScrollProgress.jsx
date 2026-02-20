@@ -26,9 +26,9 @@ const ScrollProgress = () => {
             <div className="scroll-progress-track">
                 <div
                     className="scroll-progress-bar"
-                    style={{ width: `${progress}%` }}
+                    style={{ height: `${progress}%` }}
                 />
-                <div className="scroll-progress-glow" style={{ left: `${progress}%` }} />
+                <div className="scroll-progress-glow" style={{ top: `${progress}%` }} />
             </div>
             <div className="scroll-progress-label">
                 <span className="progress-icon">⌕</span>

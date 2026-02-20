@@ -48,6 +48,20 @@ const CaseSummaryPanel = () => {
                 duration: 1.2,
                 ease: "power2.out"
             });
+
+            // Reveal Forensic Stains on Scroll
+            gsap.utils.toArray(`.${styles.forensicStain}`).forEach((stain, index) => {
+                gsap.to(stain, {
+                    scrollTrigger: {
+                        trigger: paperRef.current,
+                        start: "top 50%",
+                        end: "bottom 80%",
+                        scrub: 1,
+                    },
+                    opacity: 0.8 - (index * 0.1), // Varying opacities
+                    ease: "power1.inOut"
+                });
+            });
         }, sectionRef);
 
         return () => ctx.revert();
@@ -57,16 +71,21 @@ const CaseSummaryPanel = () => {
         <section ref={sectionRef} className={styles.sectionRoot}>
             <div className={styles.lampOverlay} />
 
-            <div ref={paperRef} className={styles.caseSummaryPaper}>
+            <div ref={paperRef} className={`${styles.caseSummaryPaper} forensic-smudge`}>
                 <div className={styles.paperTexture} />
+
+                {/* Forensic Stains */}
+                <div className={`${styles.forensicStain} ${styles.coffeeRing}`} />
+                <div className={`${styles.forensicStain} ${styles.bloodSplatter}`} />
+                <div className={`${styles.forensicStain} ${styles.bloodPrint1}`} />
 
                 <div ref={contentRef} className={styles.content}>
                     <div className={styles.caseHeader}>
-                        <span className={styles.caseLabel}>CASE SUMMARY</span>
+                        <span className={`${styles.caseLabel} scratched-text`}>CASE SUMMARY</span>
                         <span className={styles.caseNumber}>#PR-2026-B2</span>
                     </div>
 
-                    <h2 className={styles.title}>The PRISMA Anomaly</h2>
+                    <h2 className={`${styles.title} scratched-text-heavy`}>The PRISMA Anomaly</h2>
 
                     <div className={styles.metadata}>
                         <p><strong>INCIDENT DATE:</strong> FEB 28, 2026</p>

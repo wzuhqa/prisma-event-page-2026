@@ -1,5 +1,4 @@
-/* ===== GOOGLE FONTS - Must be first ===== */
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,700&family=Inter:wght@300;400;500;600;700&family=Fira+Code:wght@400;500&family=Orbitron:wght@400;500;600;700;800;0,900&family=Rajdhani:wght@300;400;500;600;700&family=Exo+2:wght@300;400;500;600;700;800;900&family=Bebas+Neue&family=Creepster&family=Nosifer&family=Metal+Mania&family=Anton&family=Oswald:wght@700;900&family=Cinzel:wght@400;600;700;900&family=Montserrat:wght@100;200;300;400&family=Raleway:wght@100;200;300&family=Special+Elite&family=Courier+Prime:wght@700&family=Crimson+Text:ital,wght@0,400;0,700;1,400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,900&family=Inter:wght@400;600;700;800&family=Fira+Code:wght@500;700&family=Bebas+Neue&family=Creepster&family=Special+Elite&family=Courier+Prime:wght@700&display=swap');
 
 @import "tailwindcss";
 
@@ -39,38 +38,59 @@
   --color-wet-pavement: #1a1a2e;
   --color-cold-blue: #1e2832;
 
-  --font-heading: 'Playfair Display',
-    Georgia,
-    serif;
-  --font-body: 'Inter',
-    system-ui,
-    sans-serif;
-  --font-mono: 'IBM Plex Mono',
-    'Fira Code',
-    'Courier New',
-    monospace;
-  --font-display: 'Bebas Neue',
-    'Anton',
-    'Oswald',
-    sans-serif;
-  --font-creepy: 'Creepster',
-    'Nosifer',
-    'Metal Mania',
-    cursive;
-  --font-cinzel: 'Cinzel',
-    serif;
-  --font-montserrat: 'Montserrat',
-    sans-serif;
-  --font-raleway: 'Raleway',
-    sans-serif;
-  --font-special-elite: 'Special Elite',
-    'Courier New',
-    monospace;
-  --font-courier-prime: 'Courier Prime',
-    monospace;
-  --font-crimson: 'Crimson Text',
-    Georgia,
-    serif;
+  --font-heading: 'Playfair Display', Georgia, serif;
+  --font-body: 'Inter', system-ui, sans-serif;
+  --font-mono: 'Courier Prime', 'Fira Code', 'Courier New', monospace;
+  --font-display: 'Bebas Neue', 'Oswald', sans-serif;
+  --font-creepy: 'Creepster', cursive;
+  --font-special-elite: 'Special Elite', 'Courier New', monospace;
+
+  /* ── Spacing Scale ── */
+  --space-1: 0.25rem;
+  /*  4px */
+  --space-2: 0.5rem;
+  /*  8px */
+  --space-3: 0.75rem;
+  /* 12px */
+  --space-4: 1rem;
+  /* 16px */
+  --space-6: 1.5rem;
+  /* 24px */
+  --space-8: 2rem;
+  /* 32px */
+  --space-10: 2.5rem;
+  /* 40px */
+  --space-12: 3rem;
+  /* 48px */
+  --space-16: 4rem;
+  /* 64px */
+  --space-20: 5rem;
+  /* 80px */
+  --space-24: 6rem;
+  /* 96px */
+  --section-padding-x: clamp(1.25rem, 5vw, 3rem);
+  --section-padding-top: 7rem;
+  /* clears navbar (90px) + breathing room */
+
+  /* ── Typographic Scale ── */
+  --text-xs: 0.65rem;
+  /* meta labels, eyebrow, whisper */
+  --text-sm: 0.8rem;
+  /* captions, secondary body */
+  --text-base: 0.95rem;
+  /* primary body */
+  --text-lg: 1.1rem;
+  /* large body / lead text */
+  --text-xl: 1.35rem;
+  /* sub-headings, card titles */
+  --text-2xl: 1.75rem;
+  /* section sub-titles */
+  --text-3xl: 2.25rem;
+  /* section titles */
+  --text-4xl: 3rem;
+  /* page-level headings */
+  --text-5xl: clamp(3.5rem, 8vw, 5.5rem);
+  /* hero / display */
 }
 
 /* Font display optimization for all text elements */
@@ -94,6 +114,15 @@ body {
   box-sizing: border-box;
 }
 
+/* Enforce max-widths on media globally to prevent horizontal spilling */
+img,
+svg,
+video,
+canvas {
+  max-width: 100%;
+  height: auto;
+}
+
 /* Lenis handles smooth scrolling, removed scroll-behavior: smooth to prevent conflicts */
 
 body {
@@ -103,13 +132,22 @@ body {
   overflow-x: hidden;
   min-height: 100vh;
   cursor: none;
-  /* Forensic Cursor Active */
+  font-weight: 600;
+  /* Ensure body text is bold enough to read against the dark noise */
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
+  /* Subtle shadow helps text punch through grain/glare */
 }
 
 #root {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
+  align-items: stretch;
+  width: 100%;
+}
+
+#root>* {
+  width: 100%;
 }
 
 /* Global Cinematic Lighting (V2.5 - Desk Lamp) */
@@ -1597,6 +1635,71 @@ body::after {
 
 .pulse-glow {
   animation: pulse-glow 2s ease-in-out infinite;
+}
+
+/* ===== FORENSIC AESTHETIC UTILITIES ===== */
+
+/* Blood Drip on Hover */
+.blood-hover-drip {
+  position: relative;
+  overflow: visible !important;
+}
+
+.blood-hover-drip::after {
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  width: 2px;
+  height: 0;
+  background: var(--color-blood);
+  opacity: 0;
+  transition: none;
+  pointer-events: none;
+  z-index: 10;
+  transform: translateX(-50%);
+  border-radius: 0 0 2px 2px;
+}
+
+.blood-hover-drip:hover::after {
+  animation: hoverBloodDrip 1.5s ease-in forwards;
+}
+
+@keyframes hoverBloodDrip {
+  0% {
+    height: 0;
+    opacity: 0;
+    top: 50%;
+  }
+
+  20% {
+    opacity: 1;
+    height: 4px;
+    top: 100%;
+  }
+
+  100% {
+    height: 20px;
+    opacity: 0;
+    top: 120%;
+  }
+}
+
+/* Forensic Smudge Texture (Inline SVG Pattern) */
+.forensic-smudge {
+  position: relative;
+}
+
+.forensic-smudge::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='smudge'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.15' numOctaves='3' seed='5'/%3E%3CfeColorMatrix type='matrix' values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.2 0'/%3E%3C/filter%3E%3Ccircle cx='50' cy='50' r='30' filter='url(%23smudge)' opacity='0.4'/%3E%3C/svg%3E");
+  background-size: 150px 150px;
+  opacity: 0.1;
+  pointer-events: none;
+  z-index: 1;
+  mix-blend-mode: overlay;
 }
 
 .float-animation {

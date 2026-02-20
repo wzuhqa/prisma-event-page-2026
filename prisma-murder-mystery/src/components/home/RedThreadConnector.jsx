@@ -8,37 +8,31 @@ const RedThreadConnector = () => {
     const pathRef = useRef(null);
 
     useEffect(() => {
-        const path = pathRef.current;
-        // SVG paths need to be rendered first before their length can be accurately measured.
-        // Wrapping in a tiny timeout ensures the browser has painted it.
-        const timeout = setTimeout(() => {
+        const ctx = gsap.context(() => {
+            const path = pathRef.current;
             if (!path) return;
+
+            // Wait for path length calculation
             const length = path.getTotalLength();
 
-            // Setup initial dash array and offset to hide the line completely
             gsap.set(path, {
                 strokeDasharray: length,
                 strokeDashoffset: length,
             });
 
-            // Use ScrollTrigger to draw the line down the page
             gsap.to(path, {
                 strokeDashoffset: 0,
                 ease: "none",
                 scrollTrigger: {
-                    // Trigger off the whole body to draw it over the entire page height
                     trigger: document.body,
                     start: "top top",
                     end: "bottom bottom",
                     scrub: 1.5,
                 }
             });
-        }, 100);
+        });
 
-        return () => {
-            clearTimeout(timeout);
-            ScrollTrigger.getAll().forEach(t => t.kill());
-        };
+        return () => ctx.revert();
     }, []);
 
     return (
@@ -47,25 +41,30 @@ const RedThreadConnector = () => {
             viewBox="0 0 1000 3000"
             preserveAspectRatio="none"
         >
-            {/* Soft glow for the red thread */}
+            {/* Soft glow for the red thread and fraying organic effect */}
             <defs>
-                <filter id="glow">
-                    <feGaussianBlur stdDeviation="4" result="coloredBlur" />
+                <filter id="blood-thread">
+                    {/* Fraying / Organic noise */}
+                    <feTurbulence type="fractalNoise" baseFrequency="0.08" numOctaves="3" result="noise" />
+                    {/* Displacing the line based on noise */}
+                    <feDisplacementMap in="SourceGraphic" in2="noise" scale="8" xChannelSelector="R" yChannelSelector="G" result="frayed" />
+                    {/* Adding glow to the frayed line */}
+                    <feGaussianBlur in="frayed" stdDeviation="4" result="coloredBlur" />
                     <feMerge>
                         <feMergeNode in="coloredBlur" />
-                        <feMergeNode in="SourceGraphic" />
+                        <feMergeNode in="frayed" />
                     </feMerge>
                 </filter>
             </defs>
             {/* Thematic, erratic path that sweeps across the page */}
             <path
                 ref={pathRef}
-                d="M500,0 C800,400 200,800 500,1200 S800,2000 500,2400 S200,2800 500,3000"
+                d="M500,0 C800,400 200,800 500,1200 S800,2000 600,2400 S100,2800 500,3000"
                 fill="none"
-                stroke="#7a0000"
-                strokeWidth="3"
+                stroke="#660000"
+                strokeWidth="4"
                 style={{ opacity: 0.8 }}
-                filter="url(#glow)"
+                filter="url(#blood-thread)"
             />
         </svg>
     );

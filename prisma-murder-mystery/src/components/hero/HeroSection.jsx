@@ -160,7 +160,7 @@ const HeroSection = () => {
 
           <div className={styles.cardInner}>
             {/* Handwritten Scribble */}
-            <div className={styles.handwrittenScribble}>
+            <div className={`${styles.handwrittenScribble} scratched-text`}>
               "Check the timestamps..."
             </div>
 
@@ -175,9 +175,9 @@ const HeroSection = () => {
             {/* Main content: university label + PRISMA title */}
             <div className={styles.titleRow}>
               <div className={styles.universityBadge}>SRM UNIVERSITY DELHI-NCR</div>
-              <div className={styles.titleWrapper}>
+              <div className={`${styles.titleWrapper} scratched-text-heavy`}>
                 <GlitchTitle text="PRISMA" />
-                <span className={styles.reopenNote}>Reopen inquiry?</span>
+                <span className={`${styles.reopenNote} scratched-text`}>Reopen inquiry?</span>
               </div>
             </div>
 

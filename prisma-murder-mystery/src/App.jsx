@@ -4,10 +4,13 @@ import CinematicIntro from './components/cinematic/CinematicIntro'
 import SlashNavbar from './components/common/SlashNavbar'
 import GlobalParticles from './components/common/GlobalParticles'
 import { NavigationProvider } from './context/NavigationContext'
+import { RedStringProvider } from './context/RedStringContext'
 import ErrorBoundary from './components/ErrorBoundary'
 import ForensicCursor from './components/common/ForensicCursor/ForensicCursor';
 import SmoothScroll from './components/common/SmoothScroll';
 import CameraFlashTransition from './components/common/CameraFlashTransition';
+import AnalogDegradation from './components/common/AnalogDegradation/AnalogDegradation';
+import RedStringBreadcrumb from './components/common/RedStringBreadcrumb';
 
 // Lazy load page components for code splitting
 const Home = lazy(() => import('./pages/Home'))
@@ -39,13 +42,21 @@ const AppContent = () => {
   const [isLoading, setIsLoading] = useState(true)
   const loadingCompleteRef = useRef(false)
 
-  // Adaptive Scroll Intensity Logic
+  // Adaptive Scroll Intensity Logic (Throttled)
   useEffect(() => {
+    let ticking = false;
+
     const handleScroll = () => {
-      const scrolled = window.scrollY;
-      const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
-      const scrollPercent = scrolled / maxScroll;
-      document.documentElement.style.setProperty('--scroll-depth', scrollPercent.toFixed(2));
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          const scrolled = window.scrollY;
+          const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+          const scrollPercent = maxScroll > 0 ? scrolled / maxScroll : 0;
+          document.documentElement.style.setProperty('--scroll-depth', scrollPercent.toFixed(2));
+          ticking = false;
+        });
+        ticking = true;
+      }
     };
 
     window.addEventListener('scroll', handleScroll, { passive: true });
@@ -65,10 +76,14 @@ const AppContent = () => {
   return (
     <SmoothScroll>
       <div className="min-h-screen bg-base">
+        <ErrorBoundary>
+          <AnalogDegradation />
+        </ErrorBoundary>
         <GlobalParticles enabled={false} intensity="medium" />
         <SlashNavbar />
+        <RedStringBreadcrumb />
         <CameraFlashTransition />
-        <div className="pt-24">
+        <div className="pt-24 relative z-20">
           <Suspense fallback={<PageLoader />}>
             <Routes>
               <Route path="/" element={<Home />} />
@@ -92,10 +107,12 @@ function App() {
 
   return (
     <ErrorBoundary>
-      <BrowserRouter basename=".">
+      <BrowserRouter basename={import.meta.env.BASE_URL}>
         <ForensicCursor />
         <NavigationProvider>
-          <AppContent />
+          <RedStringProvider>
+            <AppContent />
+          </RedStringProvider>
         </NavigationProvider>
       </BrowserRouter>
     </ErrorBoundary>

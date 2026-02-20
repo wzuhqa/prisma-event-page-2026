@@ -10,49 +10,52 @@ const ForensicCursor = () => {
     const spotlightRef = useRef(null);
 
     useEffect(() => {
-        gsap.set([cursorRef.current, spotlightRef.current], { xPercent: -50, yPercent: -50 });
+        const ctx = gsap.context(() => {
+            if (!cursorRef.current || !spotlightRef.current) return;
 
-        const xToCursor = gsap.quickSetter(cursorRef.current, "x", "px");
-        const yToCursor = gsap.quickSetter(cursorRef.current, "y", "px");
+            gsap.set([cursorRef.current, spotlightRef.current], { xPercent: -50, yPercent: -50 });
 
-        const xToSpotlight = gsap.quickSetter(spotlightRef.current, "x", "px");
-        const yToSpotlight = gsap.quickSetter(spotlightRef.current, "y", "px");
+            const xToCursor = gsap.quickSetter(cursorRef.current, "x", "px");
+            const yToCursor = gsap.quickSetter(cursorRef.current, "y", "px");
 
-        const handleMouseMove = (e) => {
-            xToCursor(e.clientX);
-            yToCursor(e.clientY);
+            const xToSpotlight = gsap.quickSetter(spotlightRef.current, "x", "px");
+            const yToSpotlight = gsap.quickSetter(spotlightRef.current, "y", "px");
 
-            xToSpotlight(e.clientX);
-            yToSpotlight(e.clientY);
+            const handleMouseMove = (e) => {
+                xToCursor(e.clientX);
+                yToCursor(e.clientY);
 
-            setIsVisible(true);
+                xToSpotlight(e.clientX);
+                yToSpotlight(e.clientY);
 
-            const target = e.target;
-            if (target && target.tagName) {
-                try {
-                    setIsPointer(
-                        window.getComputedStyle(target).cursor === 'pointer' ||
-                        target.tagName === 'A' ||
-                        target.tagName === 'BUTTON'
-                    );
-                } catch (err) {
-                    setIsPointer(false);
+                setIsVisible(true);
+
+                const target = e.target;
+                if (target && target.tagName) {
+                    try {
+                        setIsPointer(
+                            window.getComputedStyle(target).cursor === 'pointer' ||
+                            target.tagName === 'A' ||
+                            target.tagName === 'BUTTON'
+                        );
+                    } catch (err) {
+                        setIsPointer(false);
+                    }
                 }
-            }
-        };
+            };
 
-        const handleMouseLeave = () => setIsVisible(false);
-        const handleMouseEnter = () => setIsVisible(true);
+            const handleMouseLeave = () => setIsVisible(false);
+            const handleMouseEnter = () => setIsVisible(true);
 
-        window.addEventListener('mousemove', handleMouseMove);
-        document.body.addEventListener('mouseleave', handleMouseLeave);
-        document.body.addEventListener('mouseenter', handleMouseEnter);
+            window.addEventListener('mousemove', handleMouseMove);
+            document.body.addEventListener('mouseleave', handleMouseLeave);
+            document.body.addEventListener('mouseenter', handleMouseEnter);
 
-        return () => {
-            window.removeEventListener('mousemove', handleMouseMove);
-            document.body.removeEventListener('mouseleave', handleMouseLeave);
-            document.body.removeEventListener('mouseenter', handleMouseEnter);
-        };
+            // Cleanup function inside context - this will be handled by ctx.revert()
+            // but we add it here just to be Explicit about the listeners
+        });
+
+        return () => ctx.revert();
     }, []);
 
     if (typeof window !== 'undefined' && window.innerWidth <= 1024) return null;

@@ -52,10 +52,8 @@ const PHYSICS = Object.freeze({
  * @constant
  */
 const RENDER = Object.freeze({
-  SHADOW_BLUR: 10,
-  SHADOW_BLUR_SPLATTER: 8,
-  MAX_TRAIL_LENGTH_DRIP: 15,
-  MAX_TRAIL_LENGTH_PARTICLE: 5,
+  MAX_TRAIL_LENGTH_DRIP: 10, // Reduced from 15
+  MAX_TRAIL_LENGTH_PARTICLE: 3, // Reduced from 5
   POOL_POINTS: 12,
   SPLAT_COUNT_MIN: 3,
   SPLAT_COUNT_MAX: 8,
@@ -272,10 +270,14 @@ class BloodDripParticle extends Particle {
       ctx.fill();
     }
 
-    // Draw main droplet with glow
+    // Draw main droplet with pseudo-glow (using a larger, more transparent circle instead of shadowBlur)
+    ctx.globalAlpha = alpha * 0.3;
+    ctx.fillStyle = BLOOD_COLORS.bright;
+    ctx.beginPath();
+    ctx.arc(this.x, this.y, this.size * 1.5, 0, Math.PI * 2);
+    ctx.fill();
+
     ctx.globalAlpha = alpha * 0.9;
-    ctx.shadowBlur = RENDER.SHADOW_BLUR;
-    ctx.shadowColor = BLOOD_COLORS.bright;
     ctx.fillStyle = this.color;
     ctx.beginPath();
 
@@ -286,9 +288,6 @@ class BloodDripParticle extends Particle {
       ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
     }
     ctx.fill();
-
-    // Reset shadow
-    ctx.shadowBlur = 0;
   }
 
   /**
@@ -393,12 +392,9 @@ class BloodSplatter extends Particle {
     // Draw flying blood particle
     ctx.globalAlpha = alpha;
     ctx.fillStyle = this.color;
-    ctx.shadowBlur = RENDER.SHADOW_BLUR_SPLATTER;
-    ctx.shadowColor = BLOOD_COLORS.bright;
     ctx.beginPath();
     ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
     ctx.fill();
-    ctx.shadowBlur = 0;
 
     // Draw ground splats with irregular shapes
     for (const splat of this.splats) {
