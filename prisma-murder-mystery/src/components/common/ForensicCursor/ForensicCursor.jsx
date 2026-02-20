@@ -1,22 +1,44 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
+import gsap from 'gsap';
 import './ForensicCursor.css';
 
 const ForensicCursor = () => {
-    const [position, setPosition] = useState({ x: 0, y: 0 });
     const [isPointer, setIsPointer] = useState(false);
     const [isVisible, setIsVisible] = useState(false);
 
+    const cursorRef = useRef(null);
+    const spotlightRef = useRef(null);
+
     useEffect(() => {
+        gsap.set([cursorRef.current, spotlightRef.current], { xPercent: -50, yPercent: -50 });
+
+        const xToCursor = gsap.quickSetter(cursorRef.current, "x", "px");
+        const yToCursor = gsap.quickSetter(cursorRef.current, "y", "px");
+
+        const xToSpotlight = gsap.quickSetter(spotlightRef.current, "x", "px");
+        const yToSpotlight = gsap.quickSetter(spotlightRef.current, "y", "px");
+
         const handleMouseMove = (e) => {
-            setPosition({ x: e.clientX, y: e.clientY });
+            xToCursor(e.clientX);
+            yToCursor(e.clientY);
+
+            xToSpotlight(e.clientX);
+            yToSpotlight(e.clientY);
+
             setIsVisible(true);
 
             const target = e.target;
-            setIsPointer(
-                window.getComputedStyle(target).cursor === 'pointer' ||
-                target.tagName === 'A' ||
-                target.tagName === 'BUTTON'
-            );
+            if (target && target.tagName) {
+                try {
+                    setIsPointer(
+                        window.getComputedStyle(target).cursor === 'pointer' ||
+                        target.tagName === 'A' ||
+                        target.tagName === 'BUTTON'
+                    );
+                } catch (err) {
+                    setIsPointer(false);
+                }
+            }
         };
 
         const handleMouseLeave = () => setIsVisible(false);
@@ -33,16 +55,22 @@ const ForensicCursor = () => {
         };
     }, []);
 
-    if (!isVisible) return null;
+    if (typeof window !== 'undefined' && window.innerWidth <= 1024) return null;
 
     return (
-        <div
-            className={`forensic-cursor ${isPointer ? 'forensic-cursor--pointer' : ''}`}
-            style={{ left: `${position.x}px`, top: `${position.y}px` }}
-        >
-            <div className="cursor-dot" />
-            <div className="cursor-aura" />
-        </div>
+        <>
+            <div
+                ref={spotlightRef}
+                className={`forensic-spotlight ${isVisible ? 'visible' : ''} ${isPointer ? 'spotlight-focus' : ''}`}
+            />
+            <div
+                ref={cursorRef}
+                className={`forensic-cursor ${isPointer ? 'forensic-cursor--pointer' : ''} ${isVisible ? 'visible' : ''}`}
+            >
+                <div className="cursor-dot" />
+                <div className="cursor-aura" />
+            </div>
+        </>
     );
 };
 

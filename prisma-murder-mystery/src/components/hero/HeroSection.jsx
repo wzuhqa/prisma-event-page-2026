@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import gsap from 'gsap';
 import styles from './HeroSection.module.css';
 import GlitchTitle from '../common/GlitchTitle/GlitchTitle';
+import TerminalDecrypt from '../common/TerminalDecrypt/TerminalDecrypt';
 
 const HeroSection = () => {
   const sectionRef = useRef(null);
@@ -11,7 +12,7 @@ const HeroSection = () => {
   const [trailPoints, setTrailPoints] = useState([]);
 
   const lampRef = useRef(null);
-  const [isLampOn, setIsLampOn] = useState(false);
+  const [easterEggActive, setEasterEggActive] = useState(false);
 
   // Cinematic Entrance: "Lamp Turn On" (V2.5)
   useEffect(() => {
@@ -28,8 +29,7 @@ const HeroSection = () => {
       scale: 1,
       opacity: 1,
       duration: 1.2,
-      ease: "power4.out",
-      onStart: () => setIsLampOn(true)
+      ease: "power4.out"
     }, "+=0.5");
 
     // Step 2: Physical Elements Rise
@@ -42,10 +42,31 @@ const HeroSection = () => {
     }, "-=0.8");
   }, []);
 
-  // Blood Cursor Trail Logic
+  // Blood Cursor Trail & 3D Tilt Logic
   const handleMouseMove = (e) => {
     const newPoint = { x: e.clientX, y: e.clientY, id: Date.now() };
     setTrailPoints(prev => [...prev.slice(-15), newPoint]);
+
+    // 3D Parallax Tilt for Case File Card
+    if (cardRef.current && sectionRef.current) {
+      const rect = sectionRef.current.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+
+      const centerX = rect.width / 2;
+      const centerY = rect.height / 2;
+
+      const rotateX = ((y - centerY) / centerY) * -8; // max 8 deg tilt
+      const rotateY = ((x - centerX) / centerX) * 8;
+
+      gsap.to(cardRef.current, {
+        rotateX,
+        rotateY,
+        transformPerspective: 1200,
+        ease: "power2.out",
+        duration: 0.5
+      });
+    }
   };
 
   useEffect(() => {
@@ -53,6 +74,25 @@ const HeroSection = () => {
       setTrailPoints(prev => prev.slice(1));
     }, 100);
     return () => clearInterval(timer);
+  }, []);
+
+  // Hidden Terminal Easter Egg (Invisible Ink / Code)
+  useEffect(() => {
+    let keyBuffer = '';
+    const secretCode = 'truth'; // Type 'truth' to unlock
+
+    const handleKeyDown = (e) => {
+      keyBuffer += e.key.toLowerCase();
+      if (keyBuffer.length > secretCode.length) {
+        keyBuffer = keyBuffer.slice(-secretCode.length);
+      }
+      if (keyBuffer === secretCode) {
+        setEasterEggActive(true);
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
   }, []);
 
   return (
@@ -141,9 +181,15 @@ const HeroSection = () => {
               </div>
             </div>
 
-            <p className={styles.subtitle}>ANNUAL TECH &amp; CULTURAL FEST</p>
-            <p className={styles.hashtag}>#TheMysteryUnfolds</p>
-            <p className={styles.date}>FEB 28 – MAR 01, 2026</p>
+            <p className={styles.subtitle}>
+              <TerminalDecrypt text="ANNUAL TECH & CULTURAL FEST" speed={40} delay={800} />
+            </p>
+            <p className={styles.hashtag}>
+              <TerminalDecrypt text="#TheMysteryUnfolds" speed={50} delay={1200} />
+            </p>
+            <p className={styles.date}>
+              <TerminalDecrypt text="FEB 28 – MAR 01, 2026" speed={60} delay={1600} />
+            </p>
 
             {/* Confidential Stamp */}
             <div className={styles.confidentialStamp}>CONFIDENTIAL</div>
@@ -154,11 +200,10 @@ const HeroSection = () => {
               <span className={styles.tagId}>#204</span>
             </div>
 
-            {/* Case Metadata */}
             <div className={styles.metaBlock}>
-              <div className={styles.metaRow}>LEAD INVESTIGATOR:       UNKNOWN</div>
-              <div className={styles.metaRow}>CASE STATUS:             ACTIVE</div>
-              <div className={styles.metaRow}>THREAT CLASSIFICATION:   HIGH</div>
+              <div className={styles.metaRow}>LEAD INVESTIGATOR:       <TerminalDecrypt text="UNKNOWN" speed={80} delay={2000} /></div>
+              <div className={styles.metaRow}>CASE STATUS:             <TerminalDecrypt text="ACTIVE" speed={80} delay={2200} /></div>
+              <div className={styles.metaRow}>THREAT CLASSIFICATION:   <TerminalDecrypt text="HIGH" speed={80} delay={2400} /></div>
             </div>
 
             {/* CTA Buttons */}
@@ -199,6 +244,20 @@ const HeroSection = () => {
           </div>
         </div>
       </div>
+
+      {/* Hidden Easter Egg Terminal */}
+      {easterEggActive && (
+        <div className={styles.easterEggTerminal}>
+          <div className={styles.terminalHeader}>CLASSIFIED TERMINAL OVERRIDE</div>
+          <div className={styles.terminalBody}>
+            <p><TerminalDecrypt text="ACCESS GRANTED: SHADOW PROTOCOL INITIATED." speed={20} /></p>
+            <p><TerminalDecrypt text="Welcome, Investigator. We have been waiting." speed={30} delay={1000} /></p>
+            <p><TerminalDecrypt text="Find the fragments scattered across the pages" speed={30} delay={2500} /></p>
+            <p className={styles.terminalBlink}>_</p>
+          </div>
+          <button className={styles.terminalClose} onClick={() => setEasterEggActive(false)}>[ X ] TERMINATE CONNECTION</button>
+        </div>
+      )}
     </section>
   );
 };

@@ -7,6 +7,7 @@ import { NavigationProvider } from './context/NavigationContext'
 import ErrorBoundary from './components/ErrorBoundary'
 import ForensicCursor from './components/common/ForensicCursor/ForensicCursor';
 import SmoothScroll from './components/common/SmoothScroll';
+import CameraFlashTransition from './components/common/CameraFlashTransition';
 
 // Lazy load page components for code splitting
 const Home = lazy(() => import('./pages/Home'))
@@ -66,6 +67,7 @@ const AppContent = () => {
       <div className="min-h-screen bg-base">
         <GlobalParticles enabled={false} intensity="medium" />
         <SlashNavbar />
+        <CameraFlashTransition />
         <div className="pt-24">
           <Suspense fallback={<PageLoader />}>
             <Routes>
