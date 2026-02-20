@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
+import Footer from '../components/common/Footer'
 import './Team.css'
 
 const Team = () => {
@@ -475,129 +476,132 @@ const Team = () => {
 
       {/* Main Page Content */}
       {showPage && (
-        <div
-          className={`team-content ${showDepthReveal ? 'depth-reveal' : ''}`}
-          style={{
-            transform: `translate(${mousePosition.x * 0.5}px, ${mousePosition.y * 0.5}px)`
-          }}
-        >
-          {/* Idle background message */}
-          <div className={`idle-message ${showIdleMessage ? 'visible' : ''}`}>
-            The archive was never random.
+        <>
+          <div
+            className={`team-content ${showDepthReveal ? 'depth-reveal' : ''}`}
+            style={{
+              transform: `translate(${mousePosition.x * 0.5}px, ${mousePosition.y * 0.5}px)`
+            }}
+          >
+            {/* Idle background message */}
+            <div className={`idle-message ${showIdleMessage ? 'visible' : ''}`}>
+              The archive was never random.
+            </div>
+
+            {/* Glass Dossier Panel */}
+            <div className="dossier-section">
+              <header className="dossier-header">
+                <div className="header-title">PERSONNEL FILE</div>
+                <h1
+                  className={`personnel-name ${clearanceLevel >= 2 ? 'mirror' : ''}`}
+                  onMouseEnter={() => handleNameHover(true)}
+                  onMouseLeave={() => handleNameHover(false)}
+                >
+                  AKUL
+                </h1>
+                <div className="personnel-title">ARCHIVE ARCHITECT</div>
+                <div className={`clearance-level ${isRevoked ? 'revoked' : ''}`}>
+                  CLEARANCE LEVEL: {clearanceLevel}
+                </div>
+              </header>
+
+              <section className="base-info">
+                <div className="info-row">
+                  <div className="info-label">NAME:</div>
+                  <div className="info-value">AKUL</div>
+                </div>
+                <div className="info-row">
+                  <div className="info-label">TITLE:</div>
+                  <div className="info-value">Archive Architect</div>
+                </div>
+                <div className="info-row">
+                  <div className="info-label">STATUS:</div>
+                  <div className={`info-value ${isRevoked ? 'revoked' : ''}`}>
+                    {isRevoked ? 'Suspended' : 'Active'}
+                  </div>
+                </div>
+
+                <div className="tagline">
+                  "Structure is never accidental."
+                </div>
+              </section>
+
+              <section className="restricted-section">
+                <h2 className="section-title">RESTRICTED DATA</h2>
+
+                {/* Level 1 */}
+                <div
+                  className={`clearance-lock ${clearanceLevel >= 1 ? 'unlocked' : ''}`}
+                  onClick={() => handleLockClick(1)}
+                >
+                  [ LEVEL 1 {clearanceLevel >= 1 ? 'UNLOCKED' : 'LOCKED'} ]
+                </div>
+                <div className={`hidden-content ${clearanceLevel >= 1 ? 'revealed' : ''}`}>
+                  <div className="content-block">
+                    <h3>STATE: OPERATIONAL</h3>
+                    <p>Akul operates at the intersection of narrative architecture and systematic design. Every element within this archive reflects a deliberate choice—structure engineered to guide, conceal, and reveal. The precision is not performative. It is foundational. This is not documentation. This is deployment.</p>
+                  </div>
+                </div>
+
+                {/* Level 2 */}
+                <div
+                  className={`clearance-lock ${clearanceLevel >= 2 ? 'unlocked' : ''}`}
+                  onClick={() => handleLockClick(2)}
+                >
+                  [ LEVEL 2 {clearanceLevel >= 2 ? 'UNLOCKED' : 'LOCKED'} ]
+                </div>
+                <div className={`hidden-content ${clearanceLevel >= 2 ? 'revealed' : ''}`}>
+                  <div className="content-block">
+                    <h3>CORE STRENGTHS</h3>
+                    <ul>
+                      <li>Narrative Systems Design</li>
+                      <li>Psychological UX Architecture</li>
+                      <li>Structural Worldbuilding</li>
+                      <li>ARG Engineering</li>
+                    </ul>
+                  </div>
+                </div>
+
+                {/* Level 3 */}
+                <div
+                  className={`clearance-lock ${clearanceLevel >= 3 ? 'unlocked' : ''}`}
+                  onClick={() => handleLockClick(3)}
+                >
+                  [ LEVEL 3 {clearanceLevel >= 3 ? 'UNLOCKED' : 'LOCKED'} ]
+                </div>
+                <div className={`hidden-content ${clearanceLevel >= 3 ? 'revealed' : ''}`}>
+                  <div className="reveal-message">
+                    This archive was never reactive.<br />
+                    It was designed.<br />
+                    Every flicker.<br />
+                    Every silence.<br />
+                    Intentional.
+                  </div>
+                  <div className="architect-signature">AKUL<br />PRIMARY ARCHITECT</div>
+                </div>
+
+                {/* Level 4 */}
+                <div
+                  className={`clearance-lock ${clearanceLevel >= 4 ? 'unlocked' : ''}`}
+                  onClick={() => handleLockClick(4)}
+                >
+                  [ LEVEL 4 {clearanceLevel >= 4 ? 'UNLOCKED' : 'LOCKED'} ]
+                </div>
+                <div className={`hidden-content ${clearanceLevel >= 4 ? 'revealed' : ''}`}>
+                  <div className="content-block">
+                    <h3>ROOT ACCESS LOG</h3>
+                    <p>
+                      Akul initiated the archive.<br />
+                      The system was not discovered.<br />
+                      It was deployed.
+                    </p>
+                  </div>
+                </div>
+              </section>
+            </div>
+            <Footer />
           </div>
-
-          {/* Glass Dossier Panel */}
-          <div className="dossier-section">
-            <header className="dossier-header">
-              <div className="header-title">PERSONNEL FILE</div>
-              <h1
-                className={`personnel-name ${clearanceLevel >= 2 ? 'mirror' : ''}`}
-                onMouseEnter={() => handleNameHover(true)}
-                onMouseLeave={() => handleNameHover(false)}
-              >
-                AKUL
-              </h1>
-              <div className="personnel-title">ARCHIVE ARCHITECT</div>
-              <div className={`clearance-level ${isRevoked ? 'revoked' : ''}`}>
-                CLEARANCE LEVEL: {clearanceLevel}
-              </div>
-            </header>
-
-            <section className="base-info">
-              <div className="info-row">
-                <div className="info-label">NAME:</div>
-                <div className="info-value">AKUL</div>
-              </div>
-              <div className="info-row">
-                <div className="info-label">TITLE:</div>
-                <div className="info-value">Archive Architect</div>
-              </div>
-              <div className="info-row">
-                <div className="info-label">STATUS:</div>
-                <div className={`info-value ${isRevoked ? 'revoked' : ''}`}>
-                  {isRevoked ? 'Suspended' : 'Active'}
-                </div>
-              </div>
-
-              <div className="tagline">
-                "Structure is never accidental."
-              </div>
-            </section>
-
-            <section className="restricted-section">
-              <h2 className="section-title">RESTRICTED DATA</h2>
-
-              {/* Level 1 */}
-              <div
-                className={`clearance-lock ${clearanceLevel >= 1 ? 'unlocked' : ''}`}
-                onClick={() => handleLockClick(1)}
-              >
-                [ LEVEL 1 {clearanceLevel >= 1 ? 'UNLOCKED' : 'LOCKED'} ]
-              </div>
-              <div className={`hidden-content ${clearanceLevel >= 1 ? 'revealed' : ''}`}>
-                <div className="content-block">
-                  <h3>STATE: OPERATIONAL</h3>
-                  <p>Akul operates at the intersection of narrative architecture and systematic design. Every element within this archive reflects a deliberate choice—structure engineered to guide, conceal, and reveal. The precision is not performative. It is foundational. This is not documentation. This is deployment.</p>
-                </div>
-              </div>
-
-              {/* Level 2 */}
-              <div
-                className={`clearance-lock ${clearanceLevel >= 2 ? 'unlocked' : ''}`}
-                onClick={() => handleLockClick(2)}
-              >
-                [ LEVEL 2 {clearanceLevel >= 2 ? 'UNLOCKED' : 'LOCKED'} ]
-              </div>
-              <div className={`hidden-content ${clearanceLevel >= 2 ? 'revealed' : ''}`}>
-                <div className="content-block">
-                  <h3>CORE STRENGTHS</h3>
-                  <ul>
-                    <li>Narrative Systems Design</li>
-                    <li>Psychological UX Architecture</li>
-                    <li>Structural Worldbuilding</li>
-                    <li>ARG Engineering</li>
-                  </ul>
-                </div>
-              </div>
-
-              {/* Level 3 */}
-              <div
-                className={`clearance-lock ${clearanceLevel >= 3 ? 'unlocked' : ''}`}
-                onClick={() => handleLockClick(3)}
-              >
-                [ LEVEL 3 {clearanceLevel >= 3 ? 'UNLOCKED' : 'LOCKED'} ]
-              </div>
-              <div className={`hidden-content ${clearanceLevel >= 3 ? 'revealed' : ''}`}>
-                <div className="reveal-message">
-                  This archive was never reactive.<br />
-                  It was designed.<br />
-                  Every flicker.<br />
-                  Every silence.<br />
-                  Intentional.
-                </div>
-                <div className="architect-signature">AKUL<br />PRIMARY ARCHITECT</div>
-              </div>
-
-              {/* Level 4 */}
-              <div
-                className={`clearance-lock ${clearanceLevel >= 4 ? 'unlocked' : ''}`}
-                onClick={() => handleLockClick(4)}
-              >
-                [ LEVEL 4 {clearanceLevel >= 4 ? 'UNLOCKED' : 'LOCKED'} ]
-              </div>
-              <div className={`hidden-content ${clearanceLevel >= 4 ? 'revealed' : ''}`}>
-                <div className="content-block">
-                  <h3>ROOT ACCESS LOG</h3>
-                  <p>
-                    Akul initiated the archive.<br />
-                    The system was not discovered.<br />
-                    It was deployed.
-                  </p>
-                </div>
-              </div>
-            </section>
-          </div>
-        </div>
+        </>
       )}
 
       {/* Biometric Overlay */}

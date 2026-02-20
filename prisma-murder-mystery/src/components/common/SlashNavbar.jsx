@@ -15,8 +15,38 @@ const NAV_ITEMS = [
   { id: 'contact', label: 'EVIDENCE ARCHIVE', path: '/contact' }
 ]
 
+// ============================================
+// LIVE CLOCK COMPONENT
+// ============================================
+const LiveClock = () => {
+  const [time, setTime] = useState(new Date())
 
+  useEffect(() => {
+    const timer = setInterval(() => setTime(new Date()), 1000)
+    return () => clearInterval(timer)
+  }, [])
 
+  return (
+    <span className="status-time">
+      {time.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', second: '2-digit' })}
+    </span>
+  )
+}
+
+// ============================================
+// ACTIVE MARKER COMPONENT
+// Forensic-style active state indicator
+// ============================================
+const ActiveMarker = () => (
+  <div className="nav-active-marker">
+    <span className="marker-line" />
+    <span className="marker-dot" />
+  </div>
+)
+
+// ============================================
+// NAV ITEM COMPONENT
+// ============================================
 const NavItem = ({ item, isActive, isLocked, onClick, onHover, isHovered, onNavClick }) => {
   const linkRef = useRef(null)
   const threadRef = useRef(null)
@@ -51,6 +81,14 @@ const NavItem = ({ item, isActive, isLocked, onClick, onHover, isHovered, onNavC
     }, 400)
   }
 
+  // Keyboard navigation support
+  const handleKeyDown = (e) => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault()
+      handleClick()
+    }
+  }
+
   return (
     <li className="navbar-item">
       <button
@@ -59,14 +97,16 @@ const NavItem = ({ item, isActive, isLocked, onClick, onHover, isHovered, onNavC
         onClick={handleClick}
         onMouseEnter={() => onHover(item.id)}
         onMouseLeave={() => onHover(null)}
+        onKeyDown={handleKeyDown}
         disabled={isLocked}
         aria-current={isActive ? 'page' : undefined}
+        tabIndex={0}
       >
         <span className="link-text">{item.label}</span>
         {/* Evidence Red Thread */}
         <div ref={threadRef} className="nav-thread" />
-        {/* Active Pin */}
-        {isActive && <div className="nav-active-pin">📎</div>}
+        {/* Active Marker - Forensic Style */}
+        {isActive && <ActiveMarker />}
       </button>
     </li>
   )
@@ -81,33 +121,45 @@ const SlashNavbar = ({ ambientGlow = true, isLocked = false }) => {
   const navigate = useNavigate()
   const location = useLocation()
 
-
-
   // Local state for navigation control
   const [hoveredItem, setHoveredItem] = useState(null)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
+  const [isScrolled, setIsScrolled] = useState(false)
 
   const navRef = useRef(null)
   const itemsRef = useRef([])
 
+  // Scroll behavior - compact mode
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 50)
+    }
+    window.addEventListener('scroll', handleScroll, { passive: true })
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [])
+
   // GSAP Entrance Choreography
   useEffect(() => {
-    const tl = gsap.timeline();
+    let ctx = gsap.context(() => {
+      const tl = gsap.timeline();
 
-    tl.from(navRef.current, {
-      y: -60,
-      opacity: 0,
-      duration: 1.2,
-      ease: "power4.out"
-    });
+      tl.from(navRef.current, {
+        y: -60,
+        opacity: 0,
+        duration: 1.2,
+        ease: "power4.out"
+      });
 
-    tl.from(".navbar-item", {
-      y: -20,
-      opacity: 0,
-      stagger: 0.1,
-      duration: 0.8,
-      ease: "power3.out"
-    }, "-=0.8");
+      tl.from(".navbar-item", {
+        y: -20,
+        opacity: 0,
+        stagger: 0.1,
+        duration: 0.8,
+        ease: "power3.out"
+      }, "-=0.8");
+    }, navRef);
+
+    return () => ctx.revert();
   }, [])
 
   // Micro-Distortion Logic
@@ -153,7 +205,7 @@ const SlashNavbar = ({ ambientGlow = true, isLocked = false }) => {
       {/* Fixed navbar */}
       <nav
         ref={navRef}
-        className={`slash-navbar ${ambientGlow ? 'slash-navbar--ambient-glow' : ''}`}
+        className={`slash-navbar ${ambientGlow ? 'slash-navbar--ambient-glow' : ''} ${isScrolled ? 'slash-navbar--scrolled' : ''}`}
         role="navigation"
         aria-label="Main navigation"
       >
@@ -192,11 +244,12 @@ const SlashNavbar = ({ ambientGlow = true, isLocked = false }) => {
           <span className="hamburger-line"></span>
         </button>
 
-        {/* Access Status Indicator */}
+        {/* Access Status Indicator with Live Clock */}
         <div className="navbar-status">
           <div className="status-item">
             <span className="status-dot-pulse"></span>
             <span className="status-text--gold">MONITORING ACTIVE</span>
+            <LiveClock />
           </div>
         </div>
 

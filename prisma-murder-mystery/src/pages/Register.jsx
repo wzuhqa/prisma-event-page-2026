@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import Footer from '../components/common/Footer'
 
 const Register = () => {
   const [formData, setFormData] = useState({
@@ -57,10 +58,10 @@ const Register = () => {
   const handleSubmit = async (e) => {
     e.preventDefault()
     setIsSubmitting(true)
-    
+
     // Simulate API call
     await new Promise(resolve => setTimeout(resolve, 2000))
-    
+
     setIsSubmitting(false)
     setCaseRef(`PRISMA-${Date.now().toString(36).toUpperCase()}`)
     setSubmitted(true)
@@ -210,8 +211,8 @@ const Register = () => {
                   onClick={() => setFormData(prev => ({ ...prev, category: cat }))}
                   className={`
                     p-3 text-sm font-mono uppercase tracking-wider transition-all
-                    ${formData.category === cat 
-                      ? 'bg-blood text-white shadow-lg shadow-blood/30' 
+                    ${formData.category === cat
+                      ? 'bg-blood text-white shadow-lg shadow-blood/30'
                       : 'bg-midnight/50 text-fog-light border border-white/10 hover:border-blood/50'
                     }
                   `}
@@ -236,8 +237,8 @@ const Register = () => {
                   disabled={!formData.events.includes(event) && formData.events.length >= 5}
                   className={`
                     p-3 text-sm font-mono transition-all
-                    ${formData.events.includes(event) 
-                      ? 'bg-blood/20 text-blood border border-blood' 
+                    ${formData.events.includes(event)
+                      ? 'bg-blood/20 text-blood border border-blood'
                       : 'bg-midnight/50 text-fog-light border border-white/10 hover:border-blood/50 disabled:opacity-50 disabled:cursor-not-allowed'
                     }
                   `}
@@ -258,8 +259,8 @@ const Register = () => {
               disabled={isSubmitting}
               className={`
                 px-12 py-4 font-heading text-lg font-bold uppercase tracking-wider transition-all
-                ${isSubmitting 
-                  ? 'bg-blood/50 text-white/50 cursor-not-allowed' 
+                ${isSubmitting
+                  ? 'bg-blood/50 text-white/50 cursor-not-allowed'
                   : 'bg-blood text-white hover:bg-blood/90 shadow-lg hover:shadow-xl hover:shadow-blood/30'
                 }
               `}
@@ -295,6 +296,8 @@ const Register = () => {
           </div>
         </div>
       </div>
+
+      <Footer />
     </main>
   )
 }

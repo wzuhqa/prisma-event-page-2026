@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
+import Footer from '../components/common/Footer'
 import './AboutArchive.css'
 
 const prismaYears = [
@@ -190,147 +191,152 @@ const AboutArchive = () => {
         )}
       </AnimatePresence>
 
-      {!showEntry && <div className="archive-container">
-        {/* Atmospheric layers */}
-        <div className="archive-vignette" />
-        <div className="archive-grain" />
-        <div className="archive-spotlight" />
-        <div className="red-ambient-pulse" />
-        <div className="shadow-presence" />
+      {!showEntry && (
+        <>
+          <div className="archive-container">
+            {/* Atmospheric layers */}
+            <div className="archive-vignette" />
+            <div className="archive-grain" />
+            <div className="archive-spotlight" />
+            <div className="red-ambient-pulse" />
+            <div className="shadow-presence" />
 
-        {/* Dust particles */}
-        <div className="dust-layer">
-          <div className="dust dust-1" />
-          <div className="dust dust-2" />
-          <div className="dust dust-3" />
-          <div className="dust dust-4" />
-        </div>
+            {/* Dust particles */}
+            <div className="dust-layer">
+              <div className="dust dust-1" />
+              <div className="dust dust-2" />
+              <div className="dust dust-3" />
+              <div className="dust dust-4" />
+            </div>
 
-        {/* Cursor shadow */}
-        <div
-          className="cursor-shadow"
-          style={{
-            left: `${delayedCursorPos.x}px`,
-            top: `${delayedCursorPos.y}px`
-          }}
-        />
+            {/* Cursor shadow */}
+            <div
+              className="cursor-shadow"
+              style={{
+                left: `${delayedCursorPos.x}px`,
+                top: `${delayedCursorPos.y}px`
+              }}
+            />
 
-        {/* Idle message */}
-        <AnimatePresence>
-          {showIdle && (
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 0.12 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 4 }}
-              className="idle-message"
-            >
-              Some records were never meant to be reopened.
-            </motion.div>
-          )}
-        </AnimatePresence>
+            {/* Idle message */}
+            <AnimatePresence>
+              {showIdle && (
+                <motion.div
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 0.12 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 4 }}
+                  className="idle-message"
+                >
+                  Some records were never meant to be reopened.
+                </motion.div>
+              )}
+            </AnimatePresence>
 
-        <div className="archive-content-wrapper">
-          {/* Hero Section */}
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
-            className="archive-hero"
-          >
-            <div className="classified-tag">CLASSIFIED</div>
+            <div className="archive-content-wrapper">
+              {/* Hero Section */}
+              <motion.div
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
+                className="archive-hero"
+              >
+                <div className="classified-tag">CLASSIFIED</div>
 
-            <h1 className="archive-title">ABOUT PRISMA</h1>
+                <h1 className="archive-title">ABOUT PRISMA</h1>
 
-            <p className="archive-subtitle">
-              The Archive of Legacy and Innovation
-            </p>
-
-            <div className="case-file-intro">
-              <div className="file-header">
-                <span className="file-label">PRIMARY CASE FILE</span>
-                <span className="file-id">PRISMA-2K26</span>
-              </div>
-
-              <div className="file-content">
-                <p className="intro-text">
-                  Prisma 2K26 – The Grand Techno-Cultural Extravaganza of SRM University Delhi NCR, Sonepat
+                <p className="archive-subtitle">
+                  The Archive of Legacy and Innovation
                 </p>
 
-                <div className="intro-details">
-                  <h2 className="details-heading">Prisma 2K26</h2>
-                  <a href="#" className="watch-highlights">Watch Highlights</a>
-                  <p className="details-tagline">The Grand Techno-Cultural Extravaganza</p>
-
-                  <p className="details-description">
-                    Welcome to Prisma 2K26, the 8th edition of SRM University Delhi NCR, Sonepat's premier techno-cultural fest! Celebrating talent, creativity, and innovation, Prisma offers exhilarating performances, thrilling competitions, and vibrant celebrations. Enjoy dance battles, theatrical acts, music, fashion, gaming, debates, poetry slams, photography, art, and cosplay. A hub of diverse interests, Prisma fosters creativity and excellence, growing bigger each year. Whether a performer, competitor, or spectator, experience the excitement and legacy of Prisma 2K26!
-                  </p>
-                </div>
-              </div>
-            </div>
-          </motion.div>
-
-          {/* Timeline Section */}
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.6, delay: 0.4 }}
-            className="timeline-section"
-          >
-            <div className="timeline-header">
-              <div className="header-line" />
-              <h2 className="timeline-title">ARCHIVE TIMELINE</h2>
-              <div className="header-line" />
-            </div>
-
-            <div className="dossier-grid">
-              {prismaYears.map((yearData, index) => (
-                <motion.div
-                  key={yearData.year}
-                  initial={{ opacity: 0, y: 30 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.6, delay: index * 0.1 }}
-                  viewport={{ once: true }}
-                  className="year-dossier"
-                  data-year-index={index}
-                >
-                  <div className="dossier-panel">
-                    <div className="dossier-header">
-                      <div className="year-stamp">
-                        {flickerYear === index ? '2K2_6' : `PRISMA ${yearData.year}`}
-                      </div>
-                      <div className="evidence-tag">WATCH HIGHLIGHTS</div>
-                    </div>
-
-                    {loadedYears.has(String(index)) && (
-                      <div className="terminal-load">
-                        PRISMA-{yearData.year} // ARCHIVE LOADED
-                      </div>
-                    )}
-
-                    <div className="dossier-content">
-                      <h3 className="dossier-tagline">{yearData.tagline}</h3>
-                      <p className="dossier-description">{yearData.description}</p>
-                    </div>
-
-                    <div className="metallic-sheen" />
+                <div className="case-file-intro">
+                  <div className="file-header">
+                    <span className="file-label">PRIMARY CASE FILE</span>
+                    <span className="file-id">PRISMA-2K26</span>
                   </div>
-                </motion.div>
-              ))}
-            </div>
-          </motion.div>
 
-          {/* Footer */}
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 0.3 }}
-            transition={{ delay: 0.6, duration: 1 }}
-            className="archive-footer"
-          >
-            <p>Archive access is monitored. All records are sealed.</p>
-          </motion.div>
-        </div>
-      </div>}
+                  <div className="file-content">
+                    <p className="intro-text">
+                      Prisma 2K26 – The Grand Techno-Cultural Extravaganza of SRM University Delhi NCR, Sonepat
+                    </p>
+
+                    <div className="intro-details">
+                      <h2 className="details-heading">Prisma 2K26</h2>
+                      <a href="#" className="watch-highlights">Watch Highlights</a>
+                      <p className="details-tagline">The Grand Techno-Cultural Extravaganza</p>
+
+                      <p className="details-description">
+                        Welcome to Prisma 2K26, the 8th edition of SRM University Delhi NCR, Sonepat's premier techno-cultural fest! Celebrating talent, creativity, and innovation, Prisma offers exhilarating performances, thrilling competitions, and vibrant celebrations. Enjoy dance battles, theatrical acts, music, fashion, gaming, debates, poetry slams, photography, art, and cosplay. A hub of diverse interests, Prisma fosters creativity and excellence, growing bigger each year. Whether a performer, competitor, or spectator, experience the excitement and legacy of Prisma 2K26!
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </motion.div>
+
+              {/* Timeline Section */}
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.6, delay: 0.4 }}
+                className="timeline-section"
+              >
+                <div className="timeline-header">
+                  <div className="header-line" />
+                  <h2 className="timeline-title">ARCHIVE TIMELINE</h2>
+                  <div className="header-line" />
+                </div>
+
+                <div className="dossier-grid">
+                  {prismaYears.map((yearData, index) => (
+                    <motion.div
+                      key={yearData.year}
+                      initial={{ opacity: 0, y: 30 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 0.6, delay: index * 0.1 }}
+                      viewport={{ once: true }}
+                      className="year-dossier"
+                      data-year-index={index}
+                    >
+                      <div className="dossier-panel">
+                        <div className="dossier-header">
+                          <div className="year-stamp">
+                            {flickerYear === index ? '2K2_6' : `PRISMA ${yearData.year}`}
+                          </div>
+                          <div className="evidence-tag">WATCH HIGHLIGHTS</div>
+                        </div>
+
+                        {loadedYears.has(String(index)) && (
+                          <div className="terminal-load">
+                            PRISMA-{yearData.year} // ARCHIVE LOADED
+                          </div>
+                        )}
+
+                        <div className="dossier-content">
+                          <h3 className="dossier-tagline">{yearData.tagline}</h3>
+                          <p className="dossier-description">{yearData.description}</p>
+                        </div>
+
+                        <div className="metallic-sheen" />
+                      </div>
+                    </motion.div>
+                  ))}
+                </div>
+              </motion.div>
+
+              {/* Footer */}
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 0.3 }}
+                transition={{ delay: 0.6, duration: 1 }}
+                className="archive-footer"
+              >
+                <p>Archive access is monitored. All records are sealed.</p>
+              </motion.div>
+            </div>
+          </div>
+          <Footer />
+        </>
+      )}
     </>
   )
 }

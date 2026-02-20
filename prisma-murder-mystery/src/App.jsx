@@ -2,11 +2,11 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import { useState, useEffect, useCallback, useRef, lazy, Suspense } from 'react'
 import CinematicIntro from './components/cinematic/CinematicIntro'
 import SlashNavbar from './components/common/SlashNavbar'
-import Footer from './components/common/Footer'
 import GlobalParticles from './components/common/GlobalParticles'
 import { NavigationProvider } from './context/NavigationContext'
 import ErrorBoundary from './components/ErrorBoundary'
 import ForensicCursor from './components/common/ForensicCursor/ForensicCursor';
+import SmoothScroll from './components/common/SmoothScroll';
 
 // Lazy load page components for code splitting
 const Home = lazy(() => import('./pages/Home'))
@@ -62,23 +62,24 @@ const AppContent = () => {
   }
 
   return (
-    <div className="min-h-screen bg-base">
-      <GlobalParticles enabled={false} intensity="medium" />
-      <SlashNavbar />
-      <div className="pt-24">
-        <Suspense fallback={<PageLoader />}>
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/register" element={<Register />} />
-            <Route path="/events" element={<Events />} />
-            <Route path="/team" element={<Team />} />
-            <Route path="/contact" element={<ContactNoir />} />
-            <Route path="/about" element={<About />} />
-          </Routes>
-          <Footer />
-        </Suspense>
+    <SmoothScroll>
+      <div className="min-h-screen bg-base">
+        <GlobalParticles enabled={false} intensity="medium" />
+        <SlashNavbar />
+        <div className="pt-24">
+          <Suspense fallback={<PageLoader />}>
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/register" element={<Register />} />
+              <Route path="/events" element={<Events />} />
+              <Route path="/team" element={<Team />} />
+              <Route path="/contact" element={<ContactNoir />} />
+              <Route path="/about" element={<About />} />
+            </Routes>
+          </Suspense>
+        </div>
       </div>
-    </div>
+    </SmoothScroll>
   )
 }
 

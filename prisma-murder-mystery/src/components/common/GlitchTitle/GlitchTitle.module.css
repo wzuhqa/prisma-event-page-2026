@@ -4,6 +4,9 @@
     background: #000;
     padding: 1rem;
     overflow: hidden;
+    width: 100%;
+    margin: 0 auto;
+    text-align: center;
 }
 
 .titleWrapper {
@@ -11,7 +14,8 @@
     color: var(--text-header);
     font-family: var(--font-display);
     font-weight: 900;
-    font-size: clamp(4rem, 12vw, 10rem);
+    /* Scaled down to fit properly in container without wrapping */
+    font-size: clamp(2.5rem, 8vw, 4.5rem);
     text-transform: uppercase;
     letter-spacing: 0.15em;
     line-height: 1;

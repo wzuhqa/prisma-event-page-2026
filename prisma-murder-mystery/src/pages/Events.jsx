@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { eventsData } from '../data/eventsData.js'
 import CategorySection from '../components/events/CategorySection.jsx'
+import Footer from '../components/common/Footer'
 import './Events.css'
 
 const Events = () => {
@@ -87,7 +88,7 @@ const Events = () => {
       <div className="fixed inset-0 pointer-events-none z-[100] opacity-[0.03] animate-film-grain film-grain-texture" />
 
       {/* Vignette */}
-      <div className="fixed inset-0 pointer-events-none z-[99] bg-[radial-gradient(ellipse_at_center,_transparent_30%,_rgba(0,0,0,0.8)_100%)]" />
+      <div className="fixed inset-0 pointer-events-none z-[99] bg-[radial-gradient(ellipse_at_center,_transparent_30%,_rgba(0,0,0,0.4)_100%)]" />
 
       {/* Main content */}
       <div className="relative max-w-6xl mx-auto px-6 py-24 z-10">
@@ -156,6 +157,8 @@ const Events = () => {
           </motion.div>
         )}
       </AnimatePresence>
+
+      <Footer />
     </div>
   )
 }

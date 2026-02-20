@@ -12,6 +12,9 @@
   --nav-border: rgba(139, 0, 0, 0.25);
   --nav-mono: 'IBM Plex Mono', 'Courier New', monospace;
   --nav-text: #d9d9d9;
+  --nav-height: 90px;
+  --nav-height-scrolled: 60px;
+  --nav-transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 /* ----- MAIN NAVBAR ----- */
@@ -20,7 +23,7 @@
   top: 0;
   left: 0;
   width: 100%;
-  height: 90px;
+  height: var(--nav-height);
   display: flex;
   align-items: center;
   padding: 0 3rem;
@@ -31,6 +34,35 @@
   font-family: var(--nav-mono);
   overflow: hidden;
   box-sizing: border-box;
+  transition: height var(--nav-transition),
+    background var(--nav-transition),
+    padding var(--nav-transition);
+}
+
+/* ----- SCROLLED COMPACT MODE ----- */
+.slash-navbar--scrolled {
+  height: var(--nav-height-scrolled);
+  background: rgba(10, 10, 10, 0.95);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  box-shadow: 0 5px 30px rgba(0, 0, 0, 0.9);
+}
+
+.slash-navbar--scrolled .brand-uni,
+.slash-navbar--scrolled .brand-meta {
+  opacity: 0;
+  height: 0;
+  overflow: hidden;
+  margin: 0;
+  padding: 0;
+}
+
+.slash-navbar--scrolled .navbar-brand {
+  gap: 0;
+}
+
+.slash-navbar--scrolled .brand-main {
+  font-size: 1.1rem;
 }
 
 /* Forensic Scan Line */
@@ -263,13 +295,55 @@ body.psychological-spotlight .navItem:not(:hover) {
   pointer-events: none;
 }
 
-/* Active Pin */
+/* Active Pin - Legacy (kept for reference) */
 .nav-active-pin {
   position: absolute;
   top: -10px;
   font-size: 0.6rem;
   opacity: 0.6;
   filter: grayscale(1) brightness(0.5);
+}
+
+/* ----- ACTIVE MARKER - Forensic Style ----- */
+.nav-active-marker {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  pointer-events: none;
+}
+
+.marker-line {
+  width: 1px;
+  height: 8px;
+  background: var(--nav-crimson);
+  box-shadow: 0 0 6px var(--nav-crimson);
+}
+
+.marker-dot {
+  width: 4px;
+  height: 4px;
+  background: var(--nav-crimson);
+  border-radius: 50%;
+  box-shadow: 0 0 8px var(--nav-crimson);
+  animation: pulse-dot 2s ease-in-out infinite;
+}
+
+@keyframes pulse-dot {
+
+  0%,
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  50% {
+    opacity: 0.5;
+    transform: scale(1.5);
+  }
 }
 
 /* ----- STATUS ----- */
@@ -279,14 +353,33 @@ body.psychological-spotlight .navItem:not(:hover) {
   border-left: 1px solid rgba(255, 255, 255, 0.05);
 }
 
+.status-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
 .status-dot-pulse {
   width: 5px;
   height: 5px;
   background: #00ff00;
   border-radius: 50%;
   box-shadow: 0 0 8px #00ff00;
-  margin-right: 8px;
-  display: inline-block;
+  animation: status-pulse 2s ease-in-out infinite;
+}
+
+@keyframes status-pulse {
+
+  0%,
+  100% {
+    opacity: 1;
+    box-shadow: 0 0 8px #00ff00;
+  }
+
+  50% {
+    opacity: 0.6;
+    box-shadow: 0 0 4px #00ff00;
+  }
 }
 
 .status-text--gold {
@@ -295,6 +388,15 @@ body.psychological-spotlight .navItem:not(:hover) {
   font-weight: 700;
   letter-spacing: 0.1em;
   opacity: 0.7;
+}
+
+.status-time {
+  color: rgba(200, 169, 110, 0.5);
+  font-size: 0.5rem;
+  font-weight: 400;
+  letter-spacing: 0.05em;
+  margin-left: 0.5rem;
+  font-variant-numeric: tabular-nums;
 }
 
 /* ----- MICRO JITTER ----- */
@@ -356,6 +458,90 @@ body.psychological-spotlight .navItem:not(:hover) {
     font-size: 1rem;
     padding: 1.5rem;
     align-items: flex-start;
+  }
+}
+
+/* ----- HAMBURGER TOGGLE ----- */
+.hamburger-toggle {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  background: none;
+  border: 1px solid rgba(139, 0, 0, 0.3);
+  border-radius: 4px;
+  cursor: pointer;
+  padding: 10px;
+  transition: border-color 0.3s ease;
+}
+
+.hamburger-toggle:hover {
+  border-color: var(--nav-crimson);
+}
+
+.hamburger-line {
+  display: block;
+  width: 24px;
+  height: 2px;
+  background: var(--nav-text);
+  transition: all 0.3s ease;
+  transform-origin: center;
+}
+
+/* Hamburger to X animation */
+.hamburger-toggle--open .hamburger-line:nth-child(1) {
+  transform: rotate(45deg) translate(5px, 5px);
+}
+
+.hamburger-toggle--open .hamburger-line:nth-child(2) {
+  opacity: 0;
+  transform: scaleX(0);
+}
+
+.hamburger-toggle--open .hamburger-line:nth-child(3) {
+  transform: rotate(-45deg) translate(5px, -5px);
+}
+
+/* Show hamburger on mobile */
+@media (max-width: 1024px) {
+  .hamburger-toggle {
+    display: flex;
+  }
+}
+
+/* ----- FOCUS VISIBLE (Accessibility) ----- */
+.navbar-link:focus-visible {
+  outline: 2px solid var(--nav-crimson);
+  outline-offset: 4px;
+  border-radius: 2px;
+}
+
+.hamburger-toggle:focus-visible {
+  outline: 2px solid var(--nav-crimson);
+  outline-offset: 2px;
+}
+
+/* ----- REDUCED MOTION SUPPORT ----- */
+@media (prefers-reduced-motion: reduce) {
+
+  .nav-scan-line,
+  .nav-glitch-active,
+  .marker-dot,
+  .status-dot-pulse {
+    animation: none;
+  }
+
+  .navbar-link,
+  .nav-thread,
+  .hamburger-line,
+  .slash-navbar {
+    transition: none;
+  }
+
+  .gsap-entrance {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
   }
 }
 

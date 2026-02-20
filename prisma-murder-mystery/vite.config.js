@@ -20,7 +20,7 @@ export default defineConfig({
         manualChunks: {
           // Vendor chunks - separate large libraries
           'vendor-react': ['react', 'react-dom', 'react-router-dom'],
-          'vendor-animation': ['framer-motion', 'gsap'],
+          'vendor-animation': ['framer-motion', 'gsap', 'lenis', 'lenis/react'],
           'vendor-ui': ['lucide-react'],
           'vendor-three': ['three'],
         },
@@ -62,7 +62,7 @@ export default defineConfig({
 
   // Optimize dependencies
   optimizeDeps: {
-    include: ['react', 'react-dom', 'react-router-dom', 'framer-motion', 'gsap'],
+    include: ['react', 'react-dom', 'react-router-dom', 'framer-motion', 'gsap', 'lenis', 'lenis/react'],
     exclude: [],
   },
 

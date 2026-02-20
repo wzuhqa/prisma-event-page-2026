@@ -1,5 +1,9 @@
 import { lazy, Suspense } from 'react'
 import HeroSection from '../components/hero/HeroSection'
+import Footer from '../components/common/Footer'
+import RedThreadConnector from '../components/home/RedThreadConnector'
+import ScrollProgress from '../components/common/ScrollProgress'
+import BackToTop from '../components/common/BackToTop'
 
 // Lazy load heavy sections for better performance
 const CaseSummaryPanel = lazy(() => import('../components/home/CaseSummaryPanel/CaseSummaryPanel'))
@@ -21,7 +25,16 @@ const SectionLoader = () => (
 const Home = () => {
 
   return (
-    <main className="min-h-screen">
+    <main className="min-h-screen relative">
+      {/* Global Page Connector (Fixed background drawing effect) */}
+      <RedThreadConnector />
+
+      {/* ===== SCROLL PROGRESS INDICATOR ===== */}
+      <ScrollProgress />
+
+      {/* ===== BACK TO TOP BUTTON ===== */}
+      <BackToTop />
+
       {/* ===== HERO SECTION ===== */}
       <HeroSection />
 
@@ -55,6 +68,8 @@ const Home = () => {
           <SpecterArchive />
         </Suspense>
       </section>
+
+      <Footer />
     </main>
   )
 }
