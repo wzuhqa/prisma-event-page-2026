@@ -6,3 +6,23 @@ build/
 .vscode/
 coverage/
 *.log
+
+# Screenshots and images (not needed in repo)
+screenshots/
+
+# IDE and editor files
+.idea/
+*.swp
+*.swo
+
+# OS generated files
+Thumbs.db
+ehthumbs.db
+
+# Build outputs and logs
+*.txt
+!README.txt
+prisma-murder-mystery/eslint*.json
+prisma-murder-mystery/eslint*.txt
+prisma-murder-mystery/lint*.txt
+prisma-murder-mystery/build_output*.txt
