@@ -13,6 +13,13 @@ const EventLineupReveal = lazy(() => import('../components/home/EventLineupRevea
 const SpecterArchive = lazy(() => import('../components/home/SpecterArchive'))
 const SponsorsMarquee = lazy(() => import('../components/home/SponsorsMarquee'))
 
+// NEW: Enhanced sections for improved home page
+const EventHighlights = lazy(() => import('../components/home/EventHighlights'))
+const StatsCounter = lazy(() => import('../components/home/StatsCounter'))
+const TestimonialsCarousel = lazy(() => import('../components/home/TestimonialsCarousel'))
+const FAQSection = lazy(() => import('../components/home/FAQSection'))
+
+
 // Loading placeholder for lazy components
 const SectionLoader = () => (
   <div className="h-96 flex items-center justify-center bg-noir/20">
@@ -82,7 +89,46 @@ const Home = () => {
         </Suspense>
       </section>
 
+      {/* NEW SECTIONS: Improved Home Page */}
+
+      <SectionDivider label="KEY INVESTIGATIONS" />
+
+      {/* ===== EVENT HIGHLIGHTS ===== */}
+      <section className="relative z-20 bg-base">
+        <Suspense fallback={<SectionLoader />}>
+          <EventHighlights />
+        </Suspense>
+      </section>
+
+      <SectionDivider label="CASE STATISTICS" />
+
+      {/* ===== STATS COUNTER ===== */}
+      <section className="relative z-20 bg-base">
+        <Suspense fallback={<SectionLoader />}>
+          <StatsCounter />
+        </Suspense>
+      </section>
+
+      <SectionDivider label="WITNESS TESTIMONIES" />
+
+      {/* ===== TESTIMONIALS CAROUSEL ===== */}
+      <section className="relative z-20 bg-base">
+        <Suspense fallback={<SectionLoader />}>
+          <TestimonialsCarousel />
+        </Suspense>
+      </section>
+
+      <SectionDivider label="ENCRYPTED QUERIES" />
+
+      {/* ===== FAQ SECTION ===== */}
+      <section className="relative z-20 bg-base">
+        <Suspense fallback={<SectionLoader />}>
+          <FAQSection />
+        </Suspense>
+      </section>
+
       <Footer />
+
     </main>
   )
 }

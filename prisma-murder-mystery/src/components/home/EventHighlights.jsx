@@ -1,132 +1,188 @@
-import { motion } from 'framer-motion'
-import { Link } from 'react-router-dom'
-import { Scissors, Gamepad2, Camera, Music, Mic, Theater, BookOpen, Sparkles, Palette, ArrowRight } from 'lucide-react'
-import eventsData from '../../data/events.json'
-
-// Import luxury easing system
-import { ELEGANT_ENTER, LUXURY_EASE } from '../../utils/luxuryEasing'
-
-const iconMap = {
-  Scissors, Gamepad2, Camera, Music, Mic, Theater, BookOpen, Sparkles, Palette
-}
+import { motion } from 'framer-motion';
+import { Trophy, Zap, Users, Code, Palette, Mic } from 'lucide-react';
+import useIntersectionObserver from '../../hooks/useIntersectionObserver';
+import './EventHighlights.css';
 
 const EventHighlights = () => {
-  const categories = eventsData.categories.slice(0, 6) // Show first 6
+  const [ref, , hasIntersected] = useIntersectionObserver({ threshold: 0.2 });
+
+  const highlights = [
+    {
+      id: 1,
+      icon: Code,
+      title: 'Hackathon',
+      description: '24-hour coding marathon',
+      prize: '₹50,000',
+      category: 'Technical',
+      participants: '100+ teams'
+    },
+    {
+      id: 2,
+      icon: Palette,
+      title: 'Design Sprint',
+      description: 'UI/UX design challenge',
+      prize: '₹30,000',
+      category: 'Creative',
+      participants: '50+ designers'
+    },
+    {
+      id: 3,
+      icon: Mic,
+      title: 'Battle of Bands',
+      description: 'Live music competition',
+      prize: '₹40,000',
+      category: 'Cultural',
+      participants: '20+ bands'
+    },
+    {
+      id: 4,
+      icon: Trophy,
+      title: 'Gaming Arena',
+      description: 'Esports tournament',
+      prize: '₹35,000',
+      category: 'Gaming',
+      participants: '200+ gamers'
+    },
+    {
+      id: 5,
+      icon: Users,
+      title: 'Startup Pitch',
+      description: 'Entrepreneurship showcase',
+      prize: '₹60,000',
+      category: 'Business',
+      participants: '30+ startups'
+    },
+    {
+      id: 6,
+      icon: Zap,
+      title: 'Robo Wars',
+      description: 'Robot combat competition',
+      prize: '₹45,000',
+      category: 'Technical',
+      participants: '40+ robots'
+    }
+  ];
 
   return (
-    <section className="relative py-20 md:py-32">
-      <div className="max-w-7xl mx-auto px-6">
-        {/* Section header */}
+    <section ref={ref} className="event-highlights-section">
+      {/* Background Effects */}
+      <div className="highlights-bg-gradient" />
+      <div className="highlights-grain" />
+      <div className="highlights-scanlines" />
+
+      <div className="highlights-container">
+        {/* Section Header */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          // Elegant section reveal
-          transition={{ 
-            duration: 0.8,
-            ease: [0.22, 1, 0.36, 1]  // ELEGANT_ENTER
-          }}
-          className="text-center mb-16"
+          animate={hasIntersected ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.8, ease: 'easeOut' }}
+          className="highlights-header"
         >
-          <span className="font-mono text-xs tracking-[4px] text-gold uppercase mb-4 block">
-            Evidence Room
-          </span>
-          <h2 className="font-heading text-4xl md:text-5xl lg:text-6xl font-bold mb-4">
-            <span className="text-chalk">Case</span>{' '}
-            <span className="text-gradient-blood">Files</span>
+          <div className="highlights-label">
+            <span className="label-line" />
+            <span className="label-text">CASE FILES: MAJOR EVENTS</span>
+            <span className="label-line" />
+          </div>
+          <h2 className="highlights-title scratched-text-heavy">
+            Featured Investigations
           </h2>
-          <p className="text-fog-light text-lg max-w-2xl mx-auto">
-            Explore 40+ exhilarating events at PRISMA 2026. Each case file holds a new challenge.
+          <p className="highlights-subtitle">
+            High-priority cases requiring immediate attention
           </p>
         </motion.div>
 
-        {/* Event grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {categories.map((category, index) => {
-            const IconComponent = iconMap[category.icon]
-            const totalEvents = Object.values(category.events).flat().length
-
-            return (
-              <motion.div
-                key={category.id}
-                initial={{ opacity: 0, y: 40 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                // Staggered reveal with elegant easing
-                transition={{ 
-                  duration: 0.6, 
-                  delay: index * 0.1,
-                  ease: [0.22, 1, 0.36, 1]  // ELEGANT_ENTER
-                }}
-              >
-                <Link
-                  to="/events"
-                  className={`
-                    group relative block p-6 rounded-2xl overflow-hidden
-                    bg-gradient-to-br ${category.gradient}
-                    border border-white/5 hover:border-white/10
-                    transition-all duration-500 hover:-translate-y-2 hover:shadow-xl hover:shadow-blood/10
-                  `}
-                >
-                  {/* Background pattern */}
-                  <div className="absolute inset-0 opacity-10">
-                    <div className="absolute top-0 right-0 w-32 h-32 bg-white/5 rounded-full -translate-y-1/2 translate-x-1/2" />
-                  </div>
-
-                  {/* Content */}
-                  <div className="relative z-10">
-                    {/* Icon */}
-                    <div className="w-12 h-12 rounded-xl bg-white/10 flex items-center justify-center mb-4 group-hover:bg-white/20 transition-colors">
-                      {IconComponent && <IconComponent size={24} className="text-white" />}
-                    </div>
-
-                    {/* Title */}
-                    <h3 className="font-heading text-2xl font-bold text-white mb-1">
-                      {category.name}
-                    </h3>
-
-                    {/* Event count */}
-                    <p className="text-white/60 text-sm mb-3">
-                      {totalEvents} events · {category.tagline}
-                    </p>
-
-                    {/* Description */}
-                    <p className="text-white/50 text-sm leading-relaxed line-clamp-2 mb-4">
-                      {category.description}
-                    </p>
-
-                    {/* Action */}
-                    <div className="flex items-center gap-2 text-white/70 group-hover:text-white transition-colors text-sm">
-                      <span>Open Case File</span>
-                      <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
-                    </div>
-                  </div>
-                </Link>
-              </motion.div>
-            )
-          })}
+        {/* Highlights Grid */}
+        <div className="highlights-grid">
+          {highlights.map((highlight, index) => (
+            <HighlightCard
+              key={highlight.id}
+              highlight={highlight}
+              index={index}
+              hasIntersected={hasIntersected}
+            />
+          ))}
         </div>
 
-        {/* View all button */}
+        {/* Bottom CTA */}
         <motion.div
           initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          transition={{ delay: 0.5 }}
-          className="text-center mt-12"
+          animate={hasIntersected ? { opacity: 1 } : {}}
+          transition={{ duration: 0.8, delay: 0.8 }}
+          className="highlights-cta"
         >
-          <Link
-            to="/events"
-            className="inline-flex items-center gap-2 px-8 py-3 rounded-full border border-blood/30 text-chalk hover:bg-blood/10 hover:border-blood/50 transition-all duration-300 font-medium"
-          >
-            View All Case Files
-            <ArrowRight size={16} />
-          </Link>
+          <a href="/events" className="highlights-cta-button">
+            <span className="cta-icon">⌕</span>
+            <span className="cta-text">View All Cases</span>
+            <div className="cta-glow" />
+          </a>
         </motion.div>
       </div>
     </section>
-  )
-}
+  );
+};
 
-export default EventHighlights
+const HighlightCard = ({ highlight, index, hasIntersected }) => {
+  const Icon = highlight.icon;
 
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 40, rotateX: -10 }}
+      animate={hasIntersected ? { opacity: 1, y: 0, rotateX: 0 } : {}}
+      transition={{
+        duration: 0.6,
+        delay: index * 0.1,
+        ease: [0.25, 0.46, 0.45, 0.94]
+      }}
+      whileHover={{ y: -8, transition: { duration: 0.3 } }}
+      className="highlight-card"
+    >
+      {/* Card Background */}
+      <div className="card-paper-texture" />
+      <div className="card-corner-fold" />
+
+      {/* Evidence Tag */}
+      <div className="evidence-tag">
+        <span className="tag-label">CASE</span>
+        <span className="tag-id">#{String(index + 1).padStart(3, '0')}</span>
+      </div>
+
+      {/* Category Badge */}
+      <div className="category-badge">{highlight.category}</div>
+
+      {/* Icon Container */}
+      <div className="icon-container">
+        <div className="icon-glow" />
+        <Icon className="highlight-icon" size={32} />
+      </div>
+
+      {/* Content */}
+      <div className="card-content">
+        <h3 className="card-title scratched-text">{highlight.title}</h3>
+        <p className="card-description">{highlight.description}</p>
+
+        <div className="card-meta">
+          <div className="meta-row">
+            <span className="meta-label">REWARD:</span>
+            <span className="meta-value prize-value">{highlight.prize}</span>
+          </div>
+          <div className="meta-row">
+            <span className="meta-label">SUSPECTS:</span>
+            <span className="meta-value">{highlight.participants}</span>
+          </div>
+        </div>
+      </div>
+
+      {/* Status Indicator */}
+      <div className="status-indicator">
+        <span className="status-dot" />
+        <span className="status-text">ACTIVE</span>
+      </div>
+
+      {/* Hover Effects */}
+      <div className="card-hover-glow" />
+      <div className="card-scanline" />
+    </motion.div>
+  );
+};
+
+export default EventHighlights;
